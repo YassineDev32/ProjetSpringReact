@@ -6,17 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="81fe661d-7f12-41d8-b53b-0d2f392fd1f9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/config/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/CarPageComponents/MainSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/CarPageComponents/MainSection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/CarDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/CarDetails.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/ProfileSettings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/ProfileSettings.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/ResetPasswordPages/ResetPassword.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/ResetPasswordPages/ResetPassword.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/SignUp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/SignUp.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +31,9 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2pcWnYYsVEktKplLOOdLcZHdfhP" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -158,7 +150,7 @@
       <workItem from="1734119938397" duration="2239000" />
       <workItem from="1734192830942" duration="430000" />
       <workItem from="1734266923314" duration="10821000" />
-      <workItem from="1734342019035" duration="9518000" />
+      <workItem from="1734342019035" duration="15813000" />
     </task>
     <servers />
   </component>
