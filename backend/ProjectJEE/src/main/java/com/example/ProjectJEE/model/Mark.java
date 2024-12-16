@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.List;
 
 @Entity
@@ -18,6 +17,6 @@ public class Mark {
 
     private String name;
 
-    @OneToMany(mappedBy = "mark")
+    @OneToMany(mappedBy = "mark", cascade = CascadeType.ALL)
     private List<Model> models;
 }

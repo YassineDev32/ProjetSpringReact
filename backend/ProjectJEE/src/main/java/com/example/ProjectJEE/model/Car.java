@@ -27,7 +27,7 @@ public class Car {
 
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
-    private String image;
+    private byte[] image;
 
     @ManyToOne
     @JoinColumn(name = "model_id")
