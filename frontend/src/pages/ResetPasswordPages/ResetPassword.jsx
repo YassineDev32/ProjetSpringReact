@@ -32,8 +32,6 @@ const ResetPassword = () => {
       setError("Passwords do not match.");
       return;
     }
-    console.log(token);
-    console.log(formData.newPassword);
     setLoading(true);
     try {
       // Send the reset password request to the backend

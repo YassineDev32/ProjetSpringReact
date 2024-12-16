@@ -45,33 +45,33 @@ const Navbar = ({ theme, setTheme, isLoggedIn, setIsLoggedIn }) => {
 
         {/* Icône de Menu pour Mobile */}
         <div className="flex items-center gap-4 md:hidden ">
-            {/* dark  mode */}
-            {theme === "dark" ? (
-              <BiSolidSun
-                onClick={() => setTheme("light")}
-                className="text-2xl"
-              />
-            ) : (
-              <BiSolidMoon
-                onClick={() => setTheme("dark")}
-                className="text-2xl"
-              />
-            )}
-            {/* Mobile Hamburger icon */}
-            {showMenu ? (
-              <HiX
-                onClick={toggleMenu}
-                className=" cursor-pointer transition-all"
-                size={30}
-              />
-            ) : (
-              <HiMenuAlt3
-                onClick={toggleMenu}
-                className="cursor-pointer transition-all"
-                size={30}
-              />
-            )}
-          </div>
+          {/* dark  mode */}
+          {theme === "dark" ? (
+            <BiSolidSun
+              onClick={() => setTheme("light")}
+              className="text-2xl"
+            />
+          ) : (
+            <BiSolidMoon
+              onClick={() => setTheme("dark")}
+              className="text-2xl"
+            />
+          )}
+          {/* Mobile Hamburger icon */}
+          {showMenu ? (
+            <HiX
+              onClick={toggleMenu}
+              className=" cursor-pointer transition-all"
+              size={30}
+            />
+          ) : (
+            <HiMenuAlt3
+              onClick={toggleMenu}
+              className="cursor-pointer transition-all"
+              size={30}
+            />
+          )}
+        </div>
         {/* Navigation pour Tablette & Desktop */}
         <nav className="hidden md:flex items-center gap-8">
           {Navlinks.map(({ id, name, link }) => (
@@ -110,6 +110,7 @@ const Navbar = ({ theme, setTheme, isLoggedIn, setIsLoggedIn }) => {
                       <Link
                         to="/edit-profile"
                         className="block px-4 py-2 hover:bg-gray-100"
+                        onClick={() => setShowUserMenu(false)}
                       >
                         Voir Détails
                       </Link>
@@ -128,7 +129,10 @@ const Navbar = ({ theme, setTheme, isLoggedIn, setIsLoggedIn }) => {
             </div>
           ) : (
             <Link to="/login">
-              <button className="rounded-md bg-primary hover:bg-primary/80 transition duration-500 py-2 px-6 text-black font-bold">
+              <button
+                className="rounded-md bg-primary hover:bg-primary/80 transition duration-500 py-2 px-6 text-black font-bold"
+                onClick={() => setShowUserMenu(false)}
+              >
                 Login
               </button>
             </Link>
@@ -137,7 +141,12 @@ const Navbar = ({ theme, setTheme, isLoggedIn, setIsLoggedIn }) => {
       </div>
 
       {/* Menu Mobile */}
-      <ResponsiveMenu setShowMenu={setShowMenu} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} showMenu={showMenu} />
+      <ResponsiveMenu
+        setShowMenu={setShowMenu}
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+        showMenu={showMenu}
+      />
     </div>
   );
 };

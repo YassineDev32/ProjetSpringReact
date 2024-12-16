@@ -85,12 +85,12 @@ const MainSection = () => {
               </div>
 
               <div className="mt-4 text-center">
-                <p className="text-xl font-bold text-gray-800">
+                <p className="text-3xl text-gray-800 mb-5 font-bold">
                   {car.price} MAD/Jour
                 </p>
               </div>
 
-              <Link to={`/cars/${car.id}`} className="rounded-md bg-primary hover:bg-primary/80 transition duration-500 py-2 px-6 text-black">
+              <Link to={`/cars/${car.id}`} className="rounded-md text-center font-bold bg-primary hover:bg-primary/80 transition duration-500 py-2 px-6 text-black">
                 Voir Details
               </Link>
             </div>

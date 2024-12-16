@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import BookingForm from "../components/UI/BookingForm";
 import PaymentMethod from "../components/UI/PaymentMethod";
 import Helmet from "../components/UI/Helmet";
+
+
+
 import {
   DirectionsCar,
   Settings,
@@ -25,6 +28,7 @@ const CarDetails = () => {
 
   return (
     <Helmet title={singleCarItem.carName}>
+    
       <section className="flex justify-center items-center">
         <div className="container mx-auto px-8 bg-white rounded-lg p-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">

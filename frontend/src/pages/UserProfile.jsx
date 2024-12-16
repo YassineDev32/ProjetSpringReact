@@ -17,7 +17,7 @@ const UserProfile = () => {
     fetchUserData();
 
   }, []);
-  console.log(userData);
+  
 
   return (
     <div>

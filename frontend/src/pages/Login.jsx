@@ -21,7 +21,6 @@ const Login = ({ setIsLoggedIn }) => {
         password,
       });
       const token = response.data.token;
-      console.log(token);
       if (!token) {
         setError("Authentication failed: No token received.");
         return;

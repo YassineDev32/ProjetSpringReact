@@ -20,4 +20,7 @@ public class UserService {
         userRepository.findAll().forEach(users::add);
         return users;
     }
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
 }

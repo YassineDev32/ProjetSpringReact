@@ -20,6 +20,18 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = true)
+    private String firstname;
+
+    @Column(nullable = true)
+    private String lastname;
+
+    @Column(nullable = true)
+    private String CIN;
+
+    @Column(nullable = true)
+    private String numeroTel;
+
     @Column(unique = true, nullable = false)
     private String username;
 

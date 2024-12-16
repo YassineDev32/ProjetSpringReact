@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
-import { useNavigate } from "react-router-dom"; // Use useNavigate for navigation
+import { useNavigate } from "react-router-dom";
 import api from "../api";
 
-const ProfileSettings = ({ user = {}, onUpdate }) => {
+const ProfileSettings = () => {
   const [userData, setUserData] = useState(null);
   const [formData, setFormData] = useState({
+    firstname: "",
+    lastname: "",
+    numeroTel: "",
+    cin: "",
     username: "",
     email: "",
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); // Use useNavigate to navigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -19,6 +23,10 @@ const ProfileSettings = ({ user = {}, onUpdate }) => {
         const response = await api.get("/user/me");
         setUserData(response.data);
         setFormData({
+          firstname: response.data.firstname || "",
+          lastname: response.data.lastname || "",
+          numeroTel: response.data.numeroTel || "",
+          cin: response.data.cin || "",
           username: response.data.username || "",
           email: response.data.email || "",
           password: "",
@@ -35,16 +43,34 @@ const ProfileSettings = ({ user = {}, onUpdate }) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onUpdate(formData);
+
+    try {
+      const token = localStorage.getItem("token"); // Récupérer le token JWT
+      const response = await api.put(
+        "/user/update",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      localStorage.setItem("token", response.data.token);
+
+      navigate("/");
+    } catch (err) {
+      console.error("Failed to update user data", err);
+    }
   };
 
   const handlePasswordReset = async () => {
     setLoading(true);
     try {
       await api.post("/auth/request-password-reset", { email: formData.email });
-      navigate("/password-reset-sent"); // Navigate to the new route using useNavigate
+      navigate("/password-reset-sent");
     } catch (err) {
       console.error("Password reset failed", err);
     } finally {
@@ -62,6 +88,70 @@ const ProfileSettings = ({ user = {}, onUpdate }) => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label
+            htmlFor="firstname"
+            className="block mb-2 text-sm font-medium text-indigo-900"
+          >
+            Firstname
+          </label>
+          <input
+            type="text"
+            id="firstname"
+            placeholder="Enter your first name"
+            value={formData.firstname}
+            onChange={handleChange}
+            className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="lastname"
+            className="block mb-2 text-sm font-medium text-indigo-900"
+          >
+            Lastname
+          </label>
+          <input
+            type="text"
+            id="lastname"
+            placeholder="Enter your last name"
+            value={formData.lastname}
+            onChange={handleChange}
+            className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="numeroTel"
+            className="block mb-2 text-sm font-medium text-indigo-900"
+          >
+            Phone Number
+          </label>
+          <input
+            type="text"
+            id="numeroTel"
+            placeholder="Enter your phone number"
+            value={formData.numeroTel}
+            onChange={handleChange}
+            className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="cin"
+            className="block mb-2 text-sm font-medium text-indigo-900"
+          >
+            CIN
+          </label>
+          <input
+            type="text"
+            id="cin"
+            placeholder="Enter your CIN"
+            value={formData.cin}
+            onChange={handleChange}
+            className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
+          />
+        </div>
+        <div>
+          <label
             htmlFor="username"
             className="block mb-2 text-sm font-medium text-indigo-900"
           >
@@ -70,14 +160,13 @@ const ProfileSettings = ({ user = {}, onUpdate }) => {
           <input
             type="text"
             id="username"
-            name="username"
+            placeholder="Enter your username"
             value={formData.username}
             onChange={handleChange}
             className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
             required
           />
         </div>
-
         <div>
           <label
             htmlFor="email"
@@ -88,14 +177,13 @@ const ProfileSettings = ({ user = {}, onUpdate }) => {
           <input
             type="email"
             id="email"
-            name="email"
+            placeholder="Enter your email"
             value={formData.email}
             onChange={handleChange}
             className="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
             required
           />
         </div>
-
         <div className="flex justify-between">
           <button
             type="submit"

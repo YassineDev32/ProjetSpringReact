@@ -7,6 +7,7 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
@@ -17,7 +18,7 @@ const Signup = () => {
       setError("All fields are required.");
       return;
     }
-
+    setLoading(true);
     try {
       const response = await axios.post("http://localhost:8080/auth/signup", {
         email,
@@ -37,6 +38,8 @@ const Signup = () => {
     } catch (err) {
       setError("There was an error with the registration. Please try again.");
       console.error("Signup Error:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -82,8 +85,9 @@ const Signup = () => {
           <button
             type="submit"
             className="w-3/4 p-2 bg-primary text-white font-bold rounded-lg hover:bg-opacity-90"
+            disabled={loading}
           >
-            Sign Up
+            {loading ? "loading..." : "Sign Up"}
           </button>
         </div>
 
