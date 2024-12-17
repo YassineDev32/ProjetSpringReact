@@ -25,13 +25,21 @@ public class CarService {
     public Car addCar(Car car) {
         return carRepository.save(car);
     }
-    public Car updateCar(Long id, Car car) {
-        if (carRepository.existsById(id)) {
-            car.setId(id);  // Ensure the ID is preserved
-            return carRepository.save(car);
-        }
-        throw new RuntimeException("Car not found with id " + id); // Or handle with custom exception
+    public Car updateCar(Car existingCar, Car updatedData) {
+        if (updatedData.getMatricule() != null) existingCar.setMatricule(updatedData.getMatricule());
+        if (updatedData.getDescription() != null) existingCar.setDescription(updatedData.getDescription());
+        if (updatedData.getPrice() != 0) existingCar.setPrice(updatedData.getPrice());
+        if (updatedData.getStatus() != null) existingCar.setStatus(updatedData.getStatus());
+        if (updatedData.getSeats() != 0) existingCar.setSeats(updatedData.getSeats());
+        if (updatedData.isManual() != existingCar.isManual()) existingCar.setManual(updatedData.isManual());
+        if (updatedData.isAirConditioning() != existingCar.isAirConditioning()) existingCar.setAirConditioning(updatedData.isAirConditioning());
+        if (updatedData.getFuelType() != null) existingCar.setFuelType(updatedData.getFuelType());
+        if (updatedData.getImage() != null) existingCar.setImage(updatedData.getImage());
+        if (updatedData.getModel() != null) existingCar.setModel(updatedData.getModel());
+
+        return carRepository.save(existingCar);
     }
+
 
     public void deleteCar(Long id) {
         carRepository.deleteById(id);

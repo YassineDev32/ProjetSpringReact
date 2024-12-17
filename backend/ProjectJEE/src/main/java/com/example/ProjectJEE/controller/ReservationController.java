@@ -26,7 +26,7 @@ public class ReservationController {
                 .orElseThrow(() -> new RuntimeException("Reservation not found with id " + id));
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public Reservation addReservation(@RequestBody Reservation reservation) {
         return reservationService.addReservation(reservation);
     }
