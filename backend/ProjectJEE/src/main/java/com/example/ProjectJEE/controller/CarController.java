@@ -80,9 +80,16 @@ public class CarController {
 
 
     @PutMapping("/{id}")
-    public Car updateCar(@PathVariable Long id, @RequestBody Car car) {
-        return carService.updateCar(id, car);
+    public ResponseEntity<Car> updateCar(@PathVariable Long id, @RequestBody Car car) {
+        Optional<Car> existingCar = carService.getCarById(id);
+        if (existingCar.isPresent()) {
+            Car updatedCar = carService.updateCar(existingCar.get(), car);
+            return ResponseEntity.ok(updatedCar);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 
     @DeleteMapping("/{id}")
     public void deleteCar(@PathVariable Long id) {

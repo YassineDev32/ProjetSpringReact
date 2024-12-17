@@ -16,7 +16,7 @@ public class ContractController {
     @Autowired
     private ContractService contractService;
 
-    @GetMapping
+    @GetMapping("/")
     public List<Contract> getAllContracts() {
         return contractService.getAllContracts();
     }
@@ -30,7 +30,7 @@ public class ContractController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public Contract addContract(@RequestBody Contract contract) {
         return contractService.addContract(contract);
     }
