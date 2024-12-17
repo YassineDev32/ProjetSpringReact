@@ -1,5 +1,6 @@
 package com.example.ProjectJEE.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,7 @@ public class Reservation {
     private EnumReservationStatus status;
 
     @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Invoice invoice;
 }
 
