@@ -20,11 +20,11 @@ public class Model {
 
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mark_id")
     private Mark mark;
 
-    @OneToMany(mappedBy = "model")
+    @OneToMany(mappedBy = "model" , fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Car> cars;
 }

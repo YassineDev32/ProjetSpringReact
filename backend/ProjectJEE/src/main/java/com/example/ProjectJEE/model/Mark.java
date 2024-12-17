@@ -19,7 +19,7 @@ public class Mark {
 
     private String name;
 
-    @OneToMany(mappedBy = "mark", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "mark", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Model> models;
 }

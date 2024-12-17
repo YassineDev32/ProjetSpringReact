@@ -29,7 +29,7 @@ public class Car {
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] image;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "model_id")
     private Model model;
 }

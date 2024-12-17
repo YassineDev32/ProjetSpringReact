@@ -25,6 +25,9 @@ public class ModelService {
     public Model addModel(Model model) {
         return modelRepository.save(model);
     }
+    public Model updateModel(Model model) {
+        return modelRepository.save(model);  // Sauvegarde le modèle mis à jour
+    }
 
     public void deleteModel(Long id) {
         modelRepository.deleteById(id);
