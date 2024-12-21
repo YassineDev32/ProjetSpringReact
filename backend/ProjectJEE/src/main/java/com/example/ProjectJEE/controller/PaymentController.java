@@ -20,13 +20,14 @@ public class PaymentController {
         return paymentService.getAllPayments();
     }
 
+
     @GetMapping("/{id}")
     public Payment getPaymentById(@PathVariable Long id) {
         return paymentService.getPaymentById(id)
                 .orElseThrow(() -> new RuntimeException("Payment not found with id " + id));
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public Payment addPayment(@RequestBody Payment payment) {
         return paymentService.addPayment(payment);
     }

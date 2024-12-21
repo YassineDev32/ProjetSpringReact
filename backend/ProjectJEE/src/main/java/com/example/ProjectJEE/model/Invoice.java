@@ -17,18 +17,18 @@ public class Invoice {
 
     private double totalAmount;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id", nullable = false)
     private Reservation reservation;
 
     @Enumerated(EnumType.STRING)
     private EnumInvoiceStatus status;
 
-    @OneToOne(mappedBy = "invoice", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "invoice", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnore
     private Payment payment;
 
-    @OneToOne(mappedBy = "invoice", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "invoice", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnore
     private Contract contract;
 }

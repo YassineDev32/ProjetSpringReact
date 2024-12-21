@@ -15,11 +15,11 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
@@ -29,7 +29,7 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private EnumReservationStatus status;
 
-    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnore
     private Invoice invoice;
 }

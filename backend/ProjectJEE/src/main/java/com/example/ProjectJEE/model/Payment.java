@@ -21,7 +21,7 @@ public class Payment {
     private double amount;
     private LocalDateTime paymentDate;
 
-    @OneToOne
+    @OneToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "invoice_id", nullable = false)
     private Invoice invoice;
 }

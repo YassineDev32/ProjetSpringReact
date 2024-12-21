@@ -48,5 +48,9 @@ public class RapportController {
             return ResponseEntity.notFound().build();
         }
     }
+    @DeleteMapping("/{id}")
+    public void deleteRapport(@PathVariable Long id) {
+        rapportService.deleteRapport(id);
+    }
 
 }

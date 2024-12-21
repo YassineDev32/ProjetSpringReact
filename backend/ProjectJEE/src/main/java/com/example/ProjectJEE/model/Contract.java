@@ -18,7 +18,7 @@ public class Contract {
 
     private LocalDate creationDate;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "invoice_id", nullable = false)
     private Invoice invoice;
 }
