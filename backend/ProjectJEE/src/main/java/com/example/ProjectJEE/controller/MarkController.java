@@ -17,7 +17,7 @@ public class MarkController {
     private MarkService markService;
 
     // Obtenir toutes les marques
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<Mark>> getAllMarks() {
         List<Mark> marks = markService.getAllMarks();
         return ResponseEntity.ok(marks);
@@ -28,6 +28,16 @@ public class MarkController {
     public ResponseEntity<Mark> addMark(@RequestBody Mark mark) {
         Mark savedMark = markService.addMark(mark);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedMark);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Mark> updateMark(@PathVariable Long id, @RequestBody Mark mark) {
+        try {
+            Mark updatedMark = markService.updateMark(id, mark);
+            return ResponseEntity.ok(updatedMark);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Obtenir une marque par ID

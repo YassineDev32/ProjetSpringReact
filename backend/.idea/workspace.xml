@@ -6,11 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="81fe661d-7f12-41d8-b53b-0d2f392fd1f9" name="Changes" comment="test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/ContractController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/ContractController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/InvoiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/InvoiceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/model/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/model/Invoice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/model/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/model/Reservation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/ContractService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/ContractService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/MarkController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/MarkController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/ModelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/ModelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/InvoiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/InvoiceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/MarkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/MarkService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/ModelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/ModelService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,6 +163,8 @@
       <workItem from="1734383280436" duration="766000" />
       <workItem from="1734384062804" duration="6770000" />
       <workItem from="1734442608832" duration="6677000" />
+      <workItem from="1734799781381" duration="505000" />
+      <workItem from="1734800303797" duration="6551000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <option name="closed" value="true" />

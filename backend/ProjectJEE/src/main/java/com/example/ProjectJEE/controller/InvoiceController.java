@@ -63,12 +63,11 @@ public class InvoiceController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Invoice> updateInvoice(@PathVariable Long id, @RequestBody Invoice invoice) {
+    public ResponseEntity<Invoice> updateInvoice(@PathVariable Long id, @RequestBody InvoiceDTO invoiceDTO) {
         try {
-            Invoice updatedInvoice = invoiceService.updateInvoice(id, invoice);
-            return ResponseEntity.ok(updatedInvoice); // Return the updated invoice with HTTP 200
+            Invoice updatedInvoice = invoiceService.updateInvoice(id, invoiceDTO);
+            return ResponseEntity.ok(updatedInvoice);
         } catch (RuntimeException e) {
-            // If the invoice is not found, return HTTP 404 Not Found
             return ResponseEntity.notFound().build();
         }
     }

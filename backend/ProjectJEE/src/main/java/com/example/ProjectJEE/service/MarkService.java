@@ -25,4 +25,23 @@ public class MarkService {
     public Optional<Mark> getMarkById(Long id) {
         return markRepository.findById(id);
     }
+    public MarkService(MarkRepository markRepository) {
+        this.markRepository = markRepository;
+    }
+
+    public Mark updateMark(Long id, Mark updatedMark) {
+        // Find the existing Mark
+        Mark existingMark = markRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Mark not found"));
+        // Update the name if it's not null
+        if (updatedMark.getName() != null) {
+            existingMark.setName(updatedMark.getName());
+        }
+        // Update models if provided
+        if (updatedMark.getModels() != null && !updatedMark.getModels().isEmpty()) {
+            existingMark.setModels(updatedMark.getModels());
+        }
+        // Save and return the updated Mark
+        return markRepository.save(existingMark);
+    }
 }
