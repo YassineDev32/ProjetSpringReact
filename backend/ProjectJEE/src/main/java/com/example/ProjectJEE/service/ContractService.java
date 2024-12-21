@@ -1,7 +1,10 @@
 package com.example.ProjectJEE.service;
 
 import com.example.ProjectJEE.model.Contract;
+import com.example.ProjectJEE.dto.ContractDTO;
+import com.example.ProjectJEE.model.Invoice;
 import com.example.ProjectJEE.repository.ContractRepository;
+import com.example.ProjectJEE.repository.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,9 @@ public class ContractService {
 
     @Autowired
     private ContractRepository contractRepository;
+
+    @Autowired
+    private InvoiceRepository invoiceRepository;
 
     public List<Contract> getAllContracts() {
         return contractRepository.findAll();
@@ -27,20 +33,35 @@ public class ContractService {
     }
 
     // Method to update a contract
-    public Contract updateContract(Long id, Contract updatedContract) {
-        Optional<Contract> existingContractOptional = contractRepository.findById(id);
-        // If the contract exists, update its fields
-        if (existingContractOptional.isPresent()) {
-            Contract existingContract = existingContractOptional.get();
-            // Update the fields of the existing contract with values from the updated contract
-            existingContract.setTerms(updatedContract.getTerms());
-            existingContract.setCreationDate(updatedContract.getCreationDate());
-            // Save the updated contract to the repository
-            return contractRepository.save(existingContract);
-        } else {
-            // If the contract doesn't exist, throw an exception or return null (you can customize this part)
-            throw new RuntimeException("Contract not found with id " + id);
+    public Contract updateContract(Long id, ContractDTO contractDTO) {
+        Optional<Contract> existingContractOpt = contractRepository.findById(id);
+
+        if (existingContractOpt.isEmpty()) {
+            // If contract is not found, return null (controller will handle the 404 response)
+            return null;
         }
+        // Get the existing contract
+        Contract existingContract = existingContractOpt.get();
+        // Update only the fields provided in the ContractDTO
+        if (contractDTO.getTerms() != null) {
+            existingContract.setTerms(contractDTO.getTerms());
+        }
+        if (contractDTO.getCreationDate() != null) {
+            java.util.Date utilDate = contractDTO.getCreationDate();
+            java.time.LocalDate localDate = utilDate.toInstant()
+                    .atZone(java.time.ZoneId.systemDefault())
+                    .toLocalDate();
+            existingContract.setCreationDate(localDate);
+        }
+
+        if (contractDTO.getInvoiceId() != null) {
+            Optional<Invoice> invoice = invoiceRepository.findById(contractDTO.getInvoiceId());
+            if (invoice.isPresent()) {
+                existingContract.setInvoice(invoice.get());
+            }
+        }
+        // Save and return the updated contract
+        return contractRepository.save(existingContract);
     }
 
     public void deleteContract(Long id) {
