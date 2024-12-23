@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import { RiSteeringLine } from "react-icons/ri";
 import { TbRoad } from "react-icons/tb";
 import { IoMdSpeedometer } from "react-icons/io";
-import carData from "../../assets/data/carData";
 import { Link } from "react-router-dom";
 import api from "../../api";
-import { AutoMode } from "@mui/icons-material";
 
 const MainSection = () => {
   const [isGridView, setIsGridView] = useState(true);
@@ -20,7 +18,6 @@ const MainSection = () => {
       try {
         const response = await api.get("/api/cars/"); // Adjust the URL if necessary
         setCarData(response.data);
-        console.log(response.data)
       } catch (err) {
         console.error("Error fetching cars:", err);
         setError("Unable to fetch car data. Please try again later.");

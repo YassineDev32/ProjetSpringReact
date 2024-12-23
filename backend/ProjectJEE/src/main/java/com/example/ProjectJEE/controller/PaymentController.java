@@ -15,7 +15,7 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @GetMapping
+    @GetMapping()
     public List<Payment> getAllPayments() {
         return paymentService.getAllPayments();
     }
