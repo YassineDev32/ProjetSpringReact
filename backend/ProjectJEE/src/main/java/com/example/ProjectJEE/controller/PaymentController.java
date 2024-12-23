@@ -1,8 +1,13 @@
 package com.example.ProjectJEE.controller;
 
+import com.example.ProjectJEE.dto.PaymentDTO;
+import com.example.ProjectJEE.model.EnumPaymentMethod;
+import com.example.ProjectJEE.model.Invoice;
 import com.example.ProjectJEE.model.Payment;
+import com.example.ProjectJEE.repository.InvoiceRepository;
 import com.example.ProjectJEE.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +19,9 @@ public class PaymentController {
 
     @Autowired
     private PaymentService paymentService;
+
+    @Autowired
+    private InvoiceRepository invoiceRepository;
 
     @GetMapping
     public List<Payment> getAllPayments() {
@@ -28,17 +36,39 @@ public class PaymentController {
     }
 
     @PostMapping("/add")
-    public Payment addPayment(@RequestBody Payment payment) {
-        return paymentService.addPayment(payment);
+    public ResponseEntity<Payment> addPayment(@RequestBody PaymentDTO paymentDTO) {
+        try {
+            Payment payment = new Payment();
+            // Set method
+            if (paymentDTO.getMethod() != null) {
+                payment.setMethod(EnumPaymentMethod.valueOf(paymentDTO.getMethod().toUpperCase()));
+            }
+            payment.setAmount(paymentDTO.getAmount());
+            payment.setPaymentDate(paymentDTO.getPaymentDate());
+
+            // Set invoice if provided
+            if (paymentDTO.getInvoiceId() != null) {
+                Invoice invoice = invoiceRepository.findById(paymentDTO.getInvoiceId())
+                        .orElseThrow(() -> new RuntimeException("Invoice not found"));
+                payment.setInvoice(invoice);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+
+            Payment createdPayment = paymentService.addPayment(payment);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdPayment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Payment> updatePayment(@PathVariable Long id, @RequestBody Payment payment) {
+    public ResponseEntity<Payment> updatePayment(@PathVariable Long id, @RequestBody PaymentDTO paymentDTO) {
         try {
-            Payment updatedPayment = paymentService.updatePayment(id, payment);
-            return ResponseEntity.ok(updatedPayment); // Return the updated payment with HTTP 200
+            Payment updatedPayment = paymentService.updatePayment(id, paymentDTO);
+            return ResponseEntity.ok(updatedPayment);
         } catch (RuntimeException e) {
-            // If the payment is not found, return HTTP 404 Not Found
             return ResponseEntity.notFound().build();
         }
     }
