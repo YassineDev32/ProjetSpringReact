@@ -1,13 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RiSteeringLine } from "react-icons/ri";
 import { TbRoad } from "react-icons/tb";
 import { IoMdSpeedometer } from "react-icons/io";
 import carData from "../../assets/data/carData";
 import { Link } from "react-router-dom";
+import api from "../../api";
+import { AutoMode } from "@mui/icons-material";
 
 const MainSection = () => {
-  const [isGridView, setIsGridView] = useState(true); // State to track the view mode
+  const [isGridView, setIsGridView] = useState(true);
+  const [carData, setCarData] = useState([]); // State for car data
+  const [isLoading, setIsLoading] = useState(true); // State for loading
+  const [error, setError] = useState(null); // State for error
   const isButton = true;
+
+  // Fetch data from the backend
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        const response = await api.get("/api/cars/"); // Adjust the URL if necessary
+        setCarData(response.data);
+        console.log(response.data)
+      } catch (err) {
+        console.error("Error fetching cars:", err);
+        setError("Unable to fetch car data. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCars();
+  }, []);
 
   return (
     <div className="w-full flex-1">
@@ -20,7 +43,7 @@ const MainSection = () => {
               isGridView ? "bg-blue-500 text-white" : "bg-gray-300"
             }`}
           >
-            <i className="fa fa-th"></i> 
+            <i className="fa fa-th"></i>
           </button>
           <button
             onClick={() => setIsGridView(false)}
@@ -28,7 +51,7 @@ const MainSection = () => {
               !isGridView ? "bg-blue-500 text-white" : "bg-gray-300"
             }`}
           >
-            <i className="fa fa-list"></i> 
+            <i className="fa fa-list"></i>
           </button>
         </div>
       </div>
@@ -55,7 +78,7 @@ const MainSection = () => {
               <div className="relative w-full h-[220px] max-md:h-[300px] max-[500px]:h-[200px] overflow-hidden rounded-lg">
                 <img
                   className="w-full h-full object-cover"
-                  src={car.imgUrl}
+                  src={`data:image/png;base64,${car.image}`}
                   alt={car.carName}
                 />
                 <div className="absolute top-4 right-4 text-red-500 cursor-pointer">
@@ -72,15 +95,15 @@ const MainSection = () => {
               <div className="flex justify-around items-center mt-4 text-black">
                 <div className="flex flex-col items-center">
                   <RiSteeringLine className="w-6 h-6" />
-                  <p className="text-sm font-light">{car.model}</p>
+                  <p className="text-sm font-light">{car.fuelType}</p>
                 </div>
                 <div className="flex flex-col items-center">
                   <TbRoad className="w-6 h-6" />
-                  <p className="text-sm font-light">{car.speed}</p>
+                  <p className="text-sm font-light">{car.airConditioning ? "Climat" : "No Climat"}</p>
                 </div>
                 <div className="flex flex-col items-center">
                   <IoMdSpeedometer className="w-6 h-6" />
-                  <p className="text-sm font-light">{car.automatic}</p>
+                  <p className="text-sm font-light">{car.manual ? "Manuel" : "Automatic"}</p>
                 </div>
               </div>
 
@@ -90,7 +113,10 @@ const MainSection = () => {
                 </p>
               </div>
 
-              <Link to={`/cars/${car.id}`} className="rounded-md text-center font-bold bg-primary hover:bg-primary/80 transition duration-500 py-2 px-6 text-black">
+              <Link
+                to={`/cars/${car.id}`}
+                className="rounded-md text-center font-bold bg-primary hover:bg-primary/80 transition duration-500 py-2 px-6 text-black"
+              >
                 Voir Details
               </Link>
             </div>

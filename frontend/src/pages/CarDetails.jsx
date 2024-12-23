@@ -1,12 +1,9 @@
-import React, { useEffect } from "react";
-import carData from "../assets/data/carData";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BookingForm from "../components/UI/BookingForm";
 import PaymentMethod from "../components/UI/PaymentMethod";
 import Helmet from "../components/UI/Helmet";
-
-
-
+import api from "../api";
 import {
   DirectionsCar,
   Settings,
@@ -19,77 +16,82 @@ import {
 
 const CarDetails = () => {
   const { carId } = useParams();
+  const [cars, setCars] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const singleCarItem = carData.find((car) => car.id === parseInt(carId));
+  const car = cars.find((c) => c.id === parseInt(carId));
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [singleCarItem]);
+    const fetchCars = async () => {
+      try {
+        const response = await api.get("/api/cars/");
+        setCars(response.data);
+      } catch (err) {
+        setError("Unable to fetch car data. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchCars();
+  }, []);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+  if (!car) return <p>Car not found</p>;
 
   return (
-    <Helmet title={singleCarItem.carName}>
-    
+    <Helmet title={`${car.matricule} - ${car.model}`}>
       <section className="flex justify-center items-center">
         <div className="container mx-auto px-8 bg-white rounded-lg p-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="flex justify-center items-center">
               <img
-                src={singleCarItem.imgUrl}
-                alt={singleCarItem.carName}
+                src={`data:image/png;base64,${car.image}`}
+                alt="#"
                 className="w-3/4 rounded-lg"
               />
             </div>
             <div>
               <h2 className="text-3xl font-bold mb-6 text-blue-900">
-                {singleCarItem.carName}
+                {car.model.name +" "+car.model.mark.name}
               </h2>
               <div className="flex items-center justify-start gap-10 mb-6">
                 <h6 className="text-3xl font-semibold text-green-600">
-                  {singleCarItem.price}.00 MAD/Jour
+                  {car.price} MAD/Jour
                 </h6>
                 <div className="flex items-center gap-2">
                   <span className="text-yellow-500 flex">
-                    {Array(5)
-                      .fill(null)
-                      .map((_, idx) => (
-                        <Star key={idx} className="text-yellow-500" />
-                      ))}
-                  </span>
-                  <span className="text-gray-600">
-                    ({singleCarItem.rating} ratings)
+                    {Array(5).fill(null).map((_, idx) => (
+                      <Star key={idx} className="text-yellow-500" />
+                    ))}
                   </span>
                 </div>
               </div>
 
-              <p className="text-gray-700 mb-8">
-                {singleCarItem.description}
-              </p>
+              <p className="text-gray-700 mb-8">{car.description}</p>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
                 {[
                   {
                     icon: <DirectionsCar className="text-blue-600 text-2xl" />,
-                    label: `${singleCarItem.model}`,
+                    label: `Seats: ${car.seats}`,
                   },
                   {
                     icon: <Settings className="text-blue-600 text-2xl" />,
-                    label: `${singleCarItem.automatic}`,
+                    label: car.manual ? "Manual" : "Automatic",
                   },
                   {
                     icon: <Speed className="text-blue-600 text-2xl" />,
-                    label: `${singleCarItem.speed}`,
+                    label: `Fuel: ${car.fuelType}`,
                   },
                   {
                     icon: <Room className="text-blue-600 text-2xl" />,
-                    label: `${singleCarItem.gps}`,
+                    label: car.airConditioning ? "AC Available" : "No AC",
                   },
                   {
                     icon: <EventSeat className="text-blue-600 text-2xl" />,
-                    label: `${singleCarItem.seatType}`,
-                  },
-                  {
-                    icon: <Business className="text-blue-600 text-2xl" />,
-                    label: `${singleCarItem.brand}`,
+                    label: `Status: ${car.status}`,
                   },
                 ].map((item, idx) => (
                   <div

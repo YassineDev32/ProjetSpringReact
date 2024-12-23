@@ -40,7 +40,7 @@ const Navbar = ({ theme, setTheme, isLoggedIn, setIsLoggedIn }) => {
     <div className="relative z-10 shadow-md w-full dark:bg-black dark:text-primary duration-300">
       <div className="container py-4 px-6 md:px-16 flex justify-between items-center">
         <Link to="/" className="text-3xl font-bold font-serif">
-          Car Rental
+          CaroteX
         </Link>
 
         {/* Icône de Menu pour Mobile */}

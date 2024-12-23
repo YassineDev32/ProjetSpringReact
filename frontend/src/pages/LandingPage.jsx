@@ -9,9 +9,11 @@ import Testimonial from "../components/Testimonial/Testimonial";
 import AppStoreBanner from "../components/AppStoreBanner/AppStoreBanner";
 import Contact from "../components/Contact/Contact";
 
+
 const LandingPage = ({ theme }) => {
   return (
     <>
+    
       <Hero theme={theme} />
       <About />
       <Services />

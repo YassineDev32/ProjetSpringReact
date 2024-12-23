@@ -82,7 +82,7 @@ const ProfileSettings = () => {
 
   return (
     <div className="bg-white w-full px-6 py-8 mt-20 max-w-2xl mx-auto rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-6 flex items-center">
+      <h2 className="text-2xl font-bold mb-6 flex items-center dark:text-black">
         <FaUser className="mr-2" /> Profile Settings
       </h2>
       <form onSubmit={handleSubmit} className="space-y-6">

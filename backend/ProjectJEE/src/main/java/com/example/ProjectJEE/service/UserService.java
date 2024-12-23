@@ -14,6 +14,10 @@ public class UserService {
     public UserService(UserRepository userRepository, EmailService emailService) {
         this.userRepository = userRepository;
     }
+    // Find user by ID
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
 
     public List<User> allUsers() {
         List<User> users = new ArrayList<>();
@@ -22,5 +26,11 @@ public class UserService {
     }
     public User updateUser(User user) {
         return userRepository.save(user);
+    }
+    public void deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new IllegalArgumentException("User with ID " + id + " does not exist");
+        }
+        userRepository.deleteById(id);
     }
 }

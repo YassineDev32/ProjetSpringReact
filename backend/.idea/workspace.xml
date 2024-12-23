@@ -6,13 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="81fe661d-7f12-41d8-b53b-0d2f392fd1f9" name="Changes" comment="test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/InvoiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/InvoiceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/MarkController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/MarkController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/ModelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/ModelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/InvoiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/InvoiceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/MarkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/MarkService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/ModelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/ModelService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/config/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/LandingPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/LandingPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +164,10 @@
       <workItem from="1734384062804" duration="6770000" />
       <workItem from="1734442608832" duration="6677000" />
       <workItem from="1734799781381" duration="505000" />
-      <workItem from="1734800303797" duration="6551000" />
+      <workItem from="1734800303797" duration="7069000" />
+      <workItem from="1734811899228" duration="5000" />
+      <workItem from="1734814693684" duration="1567000" />
+      <workItem from="1734882463529" duration="14704000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <option name="closed" value="true" />
