@@ -1,5 +1,6 @@
 package com.example.ProjectJEE.controller;
 
+import com.example.ProjectJEE.dto.RapportDTO;
 import com.example.ProjectJEE.model.Rapport;
 import com.example.ProjectJEE.service.RapportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,6 @@ public class RapportController {
     @Autowired
     private RapportService rapportService;
 
-
-    // Ajouter un rapport
     @PostMapping("/add")
     public ResponseEntity<Rapport> addRapport(@RequestBody Rapport rapport) {
         Rapport savedRapport = rapportService.addRapport(rapport);
@@ -39,13 +38,12 @@ public class RapportController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Rapport> updateRapport(@PathVariable Long id, @RequestBody Rapport rapport) {
+    public ResponseEntity<Rapport> updateRapport(@PathVariable Long id, @RequestBody RapportDTO rapportDTO) {
         try {
-            Rapport updatedRapport = rapportService.updateRapport(id, rapport);
-            return ResponseEntity.ok(updatedRapport); // Return the updated rapport with HTTP 200
+            Rapport updatedRapport = rapportService.updateRapport(id, rapportDTO);
+            return ResponseEntity.ok(updatedRapport); // Retourne le rapport mis à jour avec HTTP 200
         } catch (RuntimeException e) {
-            // If the rapport is not found, return HTTP 404 Not Found
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build(); // Retourne HTTP 404 si le rapport n'existe pas
         }
     }
     @DeleteMapping("/{id}")

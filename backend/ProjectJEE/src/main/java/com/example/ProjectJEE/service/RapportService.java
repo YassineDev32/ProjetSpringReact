@@ -1,5 +1,6 @@
 package com.example.ProjectJEE.service;
 
+import com.example.ProjectJEE.dto.RapportDTO;
 import com.example.ProjectJEE.model.Rapport;
 import com.example.ProjectJEE.repository.RapportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,21 +31,28 @@ public class RapportService {
 
 
     // Method to update a rapport
-    public Rapport updateRapport(Long id, Rapport updatedRapport) {
-        Optional<Rapport> existingRapportOptional = rapportRepository.findById(id);
-        if (existingRapportOptional.isPresent()) {
-            Rapport existingRapport = existingRapportOptional.get();
-            // Update fields of the existing rapport
-            existingRapport.setStartDate(updatedRapport.getStartDate());
-            existingRapport.setEndDate(updatedRapport.getEndDate());
-            existingRapport.setTotalCarsRented(updatedRapport.getTotalCarsRented());
-            existingRapport.setTotalEarnings(updatedRapport.getTotalEarnings());
-            // Save the updated rapport to the repository
-            return rapportRepository.save(existingRapport);
-        } else {
-            // If the rapport doesn't exist, throw an exception or return null (customize this as needed)
-            throw new RuntimeException("Rapport not found with id " + id);
+    public Rapport updateRapport(Long id, RapportDTO rapportDTO) {
+        Rapport existingRapport = rapportRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Rapport not found with id " + id));
+
+        // Mettre à jour les champs si fournis dans le DTO
+        if (rapportDTO.getStartDate() != null) {
+            existingRapport.setStartDate(rapportDTO.getStartDate());
         }
+
+        if (rapportDTO.getEndDate() != null) {
+            existingRapport.setEndDate(rapportDTO.getEndDate());
+        }
+
+        if (rapportDTO.getTotalCarsRented() != null) {
+            existingRapport.setTotalCarsRented(rapportDTO.getTotalCarsRented());
+        }
+
+        if (rapportDTO.getTotalEarnings() != null) {
+            existingRapport.setTotalEarnings(rapportDTO.getTotalEarnings());
+        }
+
+        return rapportRepository.save(existingRapport);
     }
 
     public void deleteRapport(Long id) {

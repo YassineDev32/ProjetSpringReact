@@ -1,8 +1,10 @@
 package com.example.ProjectJEE.controller;
 
+import com.example.ProjectJEE.dto.ReservationDTO;
 import com.example.ProjectJEE.model.Reservation;
 import com.example.ProjectJEE.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,17 +29,21 @@ public class ReservationController {
     }
 
     @PostMapping("/add")
-    public Reservation addReservation(@RequestBody Reservation reservation) {
-        return reservationService.addReservation(reservation);
+    public ResponseEntity<Reservation> addReservation(@RequestBody ReservationDTO reservationDTO) {
+        try {
+            Reservation newReservation = reservationService.addReservation(reservationDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(newReservation);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Reservation> updateReservation(@PathVariable Long id, @RequestBody Reservation reservation) {
+    public ResponseEntity<Reservation> updateReservation(@PathVariable Long id, @RequestBody ReservationDTO reservationDTO) {
         try {
-            Reservation updatedReservation = reservationService.updateReservation(id, reservation);
-            return ResponseEntity.ok(updatedReservation); // Return the updated reservation with HTTP 200
+            Reservation updatedReservation = reservationService.updateReservation(id, reservationDTO);
+            return ResponseEntity.ok(updatedReservation);
         } catch (RuntimeException e) {
-            // If the reservation is not found, return HTTP 404 Not Found
             return ResponseEntity.notFound().build();
         }
     }

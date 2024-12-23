@@ -1,6 +1,10 @@
 package com.example.ProjectJEE.service;
 
+import com.example.ProjectJEE.dto.PaymentDTO;
+import com.example.ProjectJEE.model.EnumPaymentMethod;
+import com.example.ProjectJEE.model.Invoice;
 import com.example.ProjectJEE.model.Payment;
+import com.example.ProjectJEE.repository.InvoiceRepository;
 import com.example.ProjectJEE.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,9 +14,12 @@ import java.util.Optional;
 
 @Service
 public class PaymentService {
+    @Autowired
+    private PaymentRepository paymentRepository; // Injection du repository
 
     @Autowired
-    private PaymentRepository paymentRepository;
+    private InvoiceRepository invoiceRepository;
+
 
     public List<Payment> getAllPayments() {
         return paymentRepository.findAll();
@@ -26,21 +33,38 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
-    // Method to update a payment
-    public Payment updatePayment(Long id, Payment updatedPayment) {
-        Optional<Payment> existingPaymentOptional = paymentRepository.findById(id);
-        if (existingPaymentOptional.isPresent()) {
-            Payment existingPayment = existingPaymentOptional.get();
-            // Update fields of the existing payment
-            existingPayment.setAmount(updatedPayment.getAmount());
-            existingPayment.setPaymentDate(updatedPayment.getPaymentDate());
-            existingPayment.setMethod(updatedPayment.getMethod());
-            // Save the updated payment to the repository
-            return paymentRepository.save(existingPayment);
-        } else {
-            // If the payment doesn't exist, throw an exception or return null (customize this as needed)
-            throw new RuntimeException("Payment not found with id " + id);
+    public Payment updatePayment(Long id, PaymentDTO paymentDTO) {
+        Payment existingPayment = paymentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Payment not found with id " + id));
+
+        // Mettre à jour le montant si fourni
+        if (paymentDTO.getAmount() != null) {
+            existingPayment.setAmount(paymentDTO.getAmount());
         }
+
+        // Mettre à jour la date de paiement si fournie
+        if (paymentDTO.getPaymentDate() != null) {
+            existingPayment.setPaymentDate(paymentDTO.getPaymentDate());
+        }
+
+        // Mettre à jour la méthode de paiement si fournie
+        if (paymentDTO.getMethod() != null) {
+            try {
+                EnumPaymentMethod method = EnumPaymentMethod.valueOf(paymentDTO.getMethod().toUpperCase());
+                existingPayment.setMethod(method);
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException("Invalid payment method: " + paymentDTO.getMethod());
+            }
+        }
+
+        // Mettre à jour l'association avec une facture si fournie
+        if (paymentDTO.getInvoiceId() != null) {
+            Invoice invoice = invoiceRepository.findById(paymentDTO.getInvoiceId())
+                    .orElseThrow(() -> new RuntimeException("Invoice not found with id " + paymentDTO.getInvoiceId()));
+            existingPayment.setInvoice(invoice);
+        }
+
+        return paymentRepository.save(existingPayment);
     }
 
     public void deletePayment(Long id) {
