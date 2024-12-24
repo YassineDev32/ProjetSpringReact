@@ -5,15 +5,24 @@ const navLinks = [
     display: "Dashboard",
   },
   {
+    path: "/admin/reservations",
+    icon: "ri-taxi-line",
+    display: "Reservation",
+  },
+  {
     path: "/admin/vehicule",
     icon: "ri-taxi-line",
     display: "Vehicule",
   },
-  ,
   {
-    path: "/admin/Utilisateurs",
+    path: "/admin/utilisateurs",
     icon: "ri-taxi-line",
     display: "Utilisateurs",
+  },
+  {
+    path: "/admin/rapport",
+    icon: "ri-taxi-line",
+    display: "Rapport",
   },
   {
     path: "/admin/sell-car",

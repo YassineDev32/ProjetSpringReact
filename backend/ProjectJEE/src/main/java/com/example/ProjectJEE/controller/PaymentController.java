@@ -1,5 +1,6 @@
 package com.example.ProjectJEE.controller;
 
+import com.example.ProjectJEE.dto.PaymentDTO;
 import com.example.ProjectJEE.model.Payment;
 import com.example.ProjectJEE.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class PaymentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Payment> updatePayment(@PathVariable Long id, @RequestBody Payment payment) {
+    public ResponseEntity<Payment> updatePayment(@PathVariable Long id, @RequestBody PaymentDTO payment) {
         try {
             Payment updatedPayment = paymentService.updatePayment(id, payment);
             return ResponseEntity.ok(updatedPayment); // Return the updated payment with HTTP 200

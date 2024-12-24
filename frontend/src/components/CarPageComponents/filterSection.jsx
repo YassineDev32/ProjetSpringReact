@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import CarPhoto from "../../assets/car1.png";
 
-const FilterSection = () => {
+const FilterSection = ({ setFilters }) => {
   const [pickupDate, setPickupDate] = useState("");
   const [dropoffDate, setDropoffDate] = useState("");
-  const [priceRange, setPriceRange] = useState(500); 
+  const [priceRange, setPriceRange] = useState(500);
   const [carModel, setCarModel] = useState("all");
 
   const resetFilters = () => {
@@ -12,6 +12,7 @@ const FilterSection = () => {
     setDropoffDate("");
     setPriceRange(500);
     setCarModel("all");
+    setFilters({ pickupDate: "", dropoffDate: "", priceRange: 500, carModel: "all" });
   };
 
   const carModels = [
@@ -20,8 +21,12 @@ const FilterSection = () => {
     { name: "Renault", value: "Renault", img: CarPhoto },
   ];
 
+  const handleFilterChange = () => {
+    setFilters({ pickupDate, dropoffDate, priceRange, carModel });
+  };
+
   return (
-    <div className="w-full lg:w-1/4 p-8 bg-white rounded-lg shadow-gray-400 shadow-lg space-y-8" style={{height:"800px"}}>
+    <div className="w-full lg:w-1/4 p-8 bg-white rounded-lg shadow-gray-400 shadow-lg space-y-8" style={{ height: "800px" }}>
       <h1 className="text-2xl font-bold text-gray-800">Filter Cars</h1>
 
       {/* Booking Time */}
@@ -32,14 +37,16 @@ const FilterSection = () => {
           type="date"
           value={pickupDate}
           onChange={(e) => setPickupDate(e.target.value)}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500  dark:text-black"
+          onBlur={handleFilterChange}
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
         />
         <label className="block text-gray-600">Drop-off Date</label>
         <input
           type="date"
           value={dropoffDate}
           onChange={(e) => setDropoffDate(e.target.value)}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500  dark:text-black"
+          onBlur={handleFilterChange}
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
         />
       </div>
 
@@ -53,6 +60,7 @@ const FilterSection = () => {
           step={10}
           value={priceRange}
           onChange={(e) => setPriceRange(e.target.value)}
+          onBlur={handleFilterChange}
           className="w-full"
         />
         <span className="block text-gray-600">Up to {priceRange} MAD</span>
@@ -65,18 +73,13 @@ const FilterSection = () => {
           {carModels.map((model) => (
             <button
               key={model.value}
-              onClick={() => setCarModel(model.value)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition 
-              ${carModel === model.value
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-100 hover:bg-gray-200"
-                }`}
+              onClick={() => {
+                setCarModel(model.value);
+                setFilters({ pickupDate, dropoffDate, priceRange, carModel: model.value });
+              }}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition ${carModel === model.value ? "bg-blue-500 text-white" : "bg-gray-100 hover:bg-gray-200"}`}
             >
-              <img
-                src={model.img}
-                alt={model.name}
-                className="w-8 h-8 object-contain"
-              />
+              <img src={model.img} alt={model.name} className="w-8 h-8 object-contain" />
               <span className="font-semibold text-black">{model.name}</span>
             </button>
           ))}

@@ -1,7 +1,22 @@
 import React from "react";
 
 const CarItem = (props) => {
-  const { category, model, fuelType, price, image,seats } = props.item;
+  const { model, fuelType, price, image, seats, status } = props.item;
+
+  // Determine the status color
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "AVAILABLE":
+        return "bg-green-500"; // Green for AVAILABLE
+      case "RESERVED":
+        return "bg-red-500"; // Red for RESERVED
+      case "ENTRETIEN":
+        return "bg-gray-500"; // Gray for ENTRETIEN
+      default:
+        return "bg-gray-500"; // Default to gray
+    }
+  };
+
   return (
     <div className="p-5 bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer">
       {/* Car Item Top */}
@@ -17,7 +32,10 @@ const CarItem = (props) => {
 
       {/* Car Image */}
       <div className="car__img mb-[20px]">
-        <img src={`data:image/png;base64,${image}`} className="w-[100%] object-cover rounded-[5px]" />
+        <img
+          src={`data:image/png;base64,${image}`}
+          className="w-[100%] object-cover rounded-[5px]"
+        />
       </div>
 
       {/* Car Item Bottom */}
@@ -31,8 +49,17 @@ const CarItem = (props) => {
           </p>
         </div>
         <p className="car__rent text-green-500 text-lg font-semibold">
-          ${price}/d
+          {price} Mad/Jour
         </p>
+      </div>
+
+      {/* Car Status */}
+      <div
+        className={`car__status mt-4 text-center text-white text-xs font-medium p-1 rounded ${getStatusColor(
+          status
+        )} opacity-80`}
+      >
+        {status}
       </div>
     </div>
   );

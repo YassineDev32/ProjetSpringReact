@@ -31,7 +31,10 @@ import DDashboard from "./components/Dashboard/pages/Dashboard";
 import Bookings from "./components/Dashboard/pages/Bookings"; // Import the Bookings component
 import SellCar from "./components/Dashboard/pages/SellCar"; // Import the SellCar component
 import Settings from "./components/Dashboard/pages/Settings"; // Import the Settings component
-import UserManagement from "./components/Dashboard/pages/Utilisateurs/UserManagement";
+import UserManagement from "./components/Dashboard/pages/Utilisateurs/UserManagement"; 
+import DetailsCar from "./components/Dashboard/pages/DetailsCar"; 
+import ReservationManagement from "./components/Dashboard/pages/Reservations/ReservationManagement";
+import RapportManagement from "./components/Dashboard/pages/Rapports/RapportManagement";
 
 // Layout components
 const ClientLayout = ({
@@ -231,8 +234,11 @@ const App = () => {
             {/* Replace with actual content */}
             <Route path="vehicule" element={<Bookings />} />
             <Route path="utilisateurs" element={<UserManagement />} />
+            <Route path="reservations" element={<ReservationManagement />} />
+            <Route path="rapport" element={<RapportManagement />} />
             <Route path="sell-car" element={<SellCar />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="vehicule/:carId" element={<DetailsCar />} />
           </Route>
 
           {/* Catch-all redirect */}

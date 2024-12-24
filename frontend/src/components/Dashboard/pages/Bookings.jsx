@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import CarItem from "../UI/CarItem";
 import api from "../../../api.js";
+import { Link } from "react-router-dom";
 
 const Bookings = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMark, setSelectedMark] = useState(null);
   const [marks, setMarks] = useState([]);
   const [carData, setCarData] = useState([]);
+  const [selectedMarkFilter, setSelectedMarkFilter] = useState("");
   const [newCar, setNewCar] = useState({
     matricule: "",
     description: "",
     price: "",
-    status:"AVAILABLE",
+    status: "AVAILABLE",
     seats: "",
     manual: false,
     airConditioning: false,
@@ -81,7 +83,7 @@ const Bookings = () => {
         console.error("Error adding car:", error);
       });
   };
-  
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -91,6 +93,17 @@ const Bookings = () => {
     if (file) {
       reader.readAsDataURL(file);
     }
+  };
+
+  const filteredCars =
+    selectedMarkFilter === ""
+      ? carData
+      : carData.filter(
+          (car) => car.model.mark.id === parseInt(selectedMarkFilter, 10)
+        );
+
+  const handleMarkFilterChange = (e) => {
+    setSelectedMarkFilter(e.target.value);
   };
 
   return (
@@ -103,18 +116,17 @@ const Bookings = () => {
         <div className="flex items-center justify-between mb-[2rem]">
           <div className="flex items-center gap-[1.5rem]">
             <div className="filter__widget-01">
-              <select className="border-none py-[7px] px-[20px] rounded-full bg-primary-color text-black cursor-pointer">
-                <option value="New">New</option>
-                <option value="Popular">Popular</option>
-                <option value="Upcoming">Upcoming</option>
-              </select>
-            </div>
-
-            <div className="filter__widget-01">
-              <select className="border-none py-[7px] px-[20px] rounded-full bg-primary-color text-black cursor-pointer">
-                <option value="toyota">Toyota</option>
-                <option value="bmw">Bmw</option>
-                <option value="audi">Audi</option>
+              <select
+                className="border-none py-[7px] px-[20px] rounded-full bg-primary-color text-black cursor-pointer"
+                value={selectedMarkFilter}
+                onChange={handleMarkFilterChange}
+              >
+                <option value="">All Marks</option>
+                {marks.map((mark) => (
+                  <option key={mark.id} value={mark.id}>
+                    {mark.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -130,8 +142,10 @@ const Bookings = () => {
 
         {/* Car List */}
         <div className="grid grid-cols-4 gap-[2rem]">
-          {carData?.map((item) => (
-            <CarItem item={item} key={item.id} />
+          {filteredCars.map((item) => (
+            <Link to={`/admin/vehicule/${item.id}`} key={item.id}>
+              <CarItem item={item} />
+            </Link>
           ))}
         </div>
       </div>
