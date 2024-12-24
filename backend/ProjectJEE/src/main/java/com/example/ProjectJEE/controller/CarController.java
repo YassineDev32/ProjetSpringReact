@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,15 @@ public class CarController {
         return carService.getAllCars();
     }
 
+    @GetMapping("/available")
+    public ResponseEntity<List<Car>> getAvailableCars(
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate) {
+
+        // Si aucune date n'est fournie, utiliser la période par défaut
+        List<Car> availableCars = carService.getAvailableCars(startDate, endDate);
+        return ResponseEntity.ok(availableCars);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<Car> getCarById(@PathVariable Long id) {
         return carService.getCarById(id)
