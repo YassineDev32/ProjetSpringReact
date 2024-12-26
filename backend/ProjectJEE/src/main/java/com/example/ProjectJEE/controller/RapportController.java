@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/rapports")
@@ -17,6 +19,14 @@ public class RapportController {
     @Autowired
     private RapportService rapportService;
 
+    @PostMapping("/generate")
+    public ResponseEntity<Rapport> generateRapport(@RequestBody Map<String, String> dateRange) {
+        LocalDate startDate = LocalDate.parse(dateRange.get("startDate"));
+        LocalDate endDate = LocalDate.parse(dateRange.get("endDate"));
+
+        Rapport rapport = rapportService.generateRapport(startDate, endDate);
+        return ResponseEntity.ok(rapport);
+    }
     @PostMapping("/add")
     public ResponseEntity<Rapport> addRapport(@RequestBody Rapport rapport) {
         Rapport savedRapport = rapportService.addRapport(rapport);

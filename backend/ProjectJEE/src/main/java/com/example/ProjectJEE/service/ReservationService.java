@@ -11,6 +11,7 @@ import com.example.ProjectJEE.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +51,28 @@ public class ReservationService {
         reservation.setStartDate(reservationDTO.getStartDate());
         reservation.setEndDate(reservationDTO.getEndDate());
         reservation.setStatus(EnumReservationStatus.valueOf(reservationDTO.getStatus().toUpperCase()));
+
+        return reservationRepository.save(reservation);
+    }
+    // Créer une réservation
+    public Reservation createReservation(Long carId, Long userId, LocalDate startDate, LocalDate endDate, String phone, String address) {
+        // Vérification que la voiture existe
+        Car car = carRepository.findById(carId)
+                .orElseThrow(() -> new IllegalArgumentException("Car not found with ID: " + carId));
+
+        // Vérification que l'utilisateur existe
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+
+        // Création de la réservation
+        Reservation reservation = new Reservation();
+        reservation.setCar(car);
+        reservation.setUser(user);
+        reservation.setStartDate(startDate);
+        reservation.setEndDate(endDate);
+        reservation.setPhone(phone);
+        reservation.setAddress(address);
+        reservation.setStatus(EnumReservationStatus.PENDING);
 
         return reservationRepository.save(reservation);
     }
