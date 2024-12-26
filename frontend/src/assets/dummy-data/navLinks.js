@@ -25,11 +25,6 @@ const navLinks = [
     display: "Rapport",
   },
   {
-    path: "/admin/sell-car",
-    icon: "ri-shopping-bag-line",
-    display: "Sell Cars",
-  },
-  {
     path: "/admin/settings",
     icon: "ri-settings-2-line",
     display: "Settings",

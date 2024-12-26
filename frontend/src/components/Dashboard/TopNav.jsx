@@ -34,7 +34,7 @@ const TopNav = () => {
 
           {/* Profile */}
           <div className="profile">
-            <Link to="/settings">
+            <Link to="/admin/settings">
               <img
                 src={profileImg}
                 alt="Profile"

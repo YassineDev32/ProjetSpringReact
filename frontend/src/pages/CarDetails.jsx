@@ -10,7 +10,6 @@ import {
   Speed,
   Room,
   EventSeat,
-  Business,
   Star,
 } from "@mui/icons-material";
 

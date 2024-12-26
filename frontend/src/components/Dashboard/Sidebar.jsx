@@ -1,10 +1,25 @@
 import React from "react";
-
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import navLinks from "../../assets/dummy-data/navLinks";
-
+import axios from "axios";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await axios.post("http://localhost:8080/auth/logout", null, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      localStorage.removeItem("token");
+      navigate("/login");
+    } catch (err) {
+      console.error("Erreur lors de la déconnexion:", err);
+    }
+  };
+
   return (
     <div
       className="w-[260px] h-full fixed top-0 left-0 z-[999] p-6"
@@ -67,6 +82,7 @@ const Sidebar = () => {
           <span
             className="flex items-center gap-2 cursor-pointer transition duration-300 hover:text-white"
             style={{ color: "#808191" }} // Small text color
+            onClick={handleLogout}
           >
             <i className="ri-logout-circle-r-line"></i> Logout
           </span>
