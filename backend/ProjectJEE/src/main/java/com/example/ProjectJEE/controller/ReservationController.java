@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -27,6 +28,15 @@ public class ReservationController {
     public Reservation getReservationById(@PathVariable Long id) {
         return reservationService.getReservationById(id)
                 .orElseThrow(() -> new RuntimeException("Reservation not found with id " + id));
+    }
+    @PostMapping("/create")
+    public ResponseEntity<Reservation> createReservation(@RequestBody ReservationDTO request) {
+        Reservation reservation = reservationService.createReservation(
+                request.getCarId(), request.getUserId(),
+                request.getStartDate(), request.getEndDate(),
+                request.getPhone(), request.getAddress()
+        );
+        return ResponseEntity.ok(reservation);
     }
 
     @PostMapping("/add")

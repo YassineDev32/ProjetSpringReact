@@ -26,8 +26,11 @@ public class Reservation {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    private String phone; // Nouveau champ pour le téléphone
+    private String address;
+
     @Enumerated(EnumType.STRING)
-    private EnumReservationStatus status;
+    private EnumReservationStatus status = EnumReservationStatus.PENDING;
 
     @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnore
