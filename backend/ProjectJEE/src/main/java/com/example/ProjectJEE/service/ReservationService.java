@@ -1,16 +1,16 @@
 package com.example.ProjectJEE.service;
 
 import com.example.ProjectJEE.dto.ReservationDTO;
-import com.example.ProjectJEE.model.Car;
-import com.example.ProjectJEE.model.EnumReservationStatus;
-import com.example.ProjectJEE.model.Reservation;
-import com.example.ProjectJEE.model.User;
+import com.example.ProjectJEE.model.*;
 import com.example.ProjectJEE.repository.CarRepository;
+import com.example.ProjectJEE.repository.InvoiceRepository;
 import com.example.ProjectJEE.repository.ReservationRepository;
 import com.example.ProjectJEE.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import javax.xml.datatype.DatatypeConstants;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +25,9 @@ public class ReservationService {
 
     @Autowired
     private CarRepository carRepository;
+
+    @Autowired
+    private InvoiceRepository invoiceRepository;
 
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
@@ -75,6 +78,50 @@ public class ReservationService {
         reservation.setStatus(EnumReservationStatus.PENDING);
 
         return reservationRepository.save(reservation);
+    }
+    public Reservation findById(Long id) {
+        return reservationRepository.findById(id).orElse(null);
+    }
+
+    public void confirmReservation(Long reservationId) {
+        Reservation reservation = findById(reservationId);
+        if (reservation != null) {
+            // Créer une nouvelle facture liée à la réservation
+            Invoice invoice = new Invoice();
+            invoice.setReservation(reservation);
+            invoice.setTotalAmount(calculateTotalAmount(reservation)); // Calculer le montant total
+            invoiceRepository.save(invoice);
+
+            // Mettre à jour le statut de la réservation
+            reservation.setStatus(EnumReservationStatus.CONFIRMED);
+            reservationRepository.save(reservation);
+        }
+    }
+
+    public void cancelReservation(Long reservationId) {
+        Reservation reservation = findById(reservationId);
+        if (reservation != null) {
+            // Mettre à jour le statut de la réservation
+            reservation.setStatus(EnumReservationStatus.CANCELLED);
+            reservationRepository.save(reservation);
+        }
+    }
+
+    // Méthode pour calculer le montant total de la réservation
+    private double calculateTotalAmount(Reservation reservation) {
+        LocalDate startDate = reservation.getStartDate();
+        LocalDate endDate = reservation.getEndDate();
+
+        long days = endDate.toEpochDay() - startDate.toEpochDay() + 1;
+        int carPricePerDay = reservation.getCar().getPrice();
+        double totalAmount = days * carPricePerDay;
+
+        // Add any potential discounts or surcharges here
+        // For example:
+        // - Discount for long-term rentals
+        // - Surcharge for additional services
+
+        return totalAmount;
     }
 
     public Reservation updateReservation(Long id, ReservationDTO reservationDTO) {

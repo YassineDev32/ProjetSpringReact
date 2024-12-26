@@ -22,7 +22,7 @@ public class Invoice {
     private Reservation reservation;
 
     @Enumerated(EnumType.STRING)
-    private EnumInvoiceStatus status;
+    private EnumInvoiceStatus status = EnumInvoiceStatus.PENDING;
 
     @OneToOne(mappedBy = "invoice", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnore
