@@ -1,10 +1,9 @@
 import React from "react";
 import { FaUserCircle } from "react-icons/fa";
-import { Navlinks } from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const ResponsiveMenu = ({ showMenu, setShowMenu, isLoggedIn, setIsLoggedIn }) => {
+const ResponsiveMenu = ({ showMenu, setShowMenu, isLoggedIn, setIsLoggedIn, navLinks }) => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
@@ -55,7 +54,7 @@ const ResponsiveMenu = ({ showMenu, setShowMenu, isLoggedIn, setIsLoggedIn }) =>
 
         <nav className="mt-12">
           <ul className="space-y-4 text-xl">
-            {Navlinks.map((data) => (
+            {navLinks.map((data) => (
               <li key={data.id}>
                 <a href={data.link} className="mb-5 inline-block">
                   {data.name}

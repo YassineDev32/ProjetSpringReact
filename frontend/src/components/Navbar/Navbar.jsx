@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiSolidSun, BiSolidMoon } from "react-icons/bi";
 import { FaUserCircle } from "react-icons/fa";
@@ -6,17 +6,30 @@ import { HiMenuAlt3, HiX } from "react-icons/hi";
 import axios from "axios";
 import ResponsiveMenu from "./ResponsiveMenu";
 
-export const Navlinks = [
-  { id: 1, name: "HOME", link: "/#home" },
-  { id: 2, name: "CARS", link: "/cars" },
-  { id: 3, name: "ABOUT", link: "/#about" },
-  { id: 4, name: "BOOKING", link: "/#booking" },
-];
-
 const Navbar = ({ theme, setTheme, isLoggedIn, setIsLoggedIn }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [userRole, setUserRole] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/auth/user-role", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setUserRole(response.data.role);
+      } catch (err) {
+        console.error("Erreur lors de la récupération du rôle de l'utilisateur:", err);
+      }
+    };
+
+    if (isLoggedIn) {
+      fetchUserRole();
+    }
+  }, [isLoggedIn]);
 
   const handleLogout = async () => {
     try {
@@ -32,9 +45,26 @@ const Navbar = ({ theme, setTheme, isLoggedIn, setIsLoggedIn }) => {
       console.error("Erreur lors de la déconnexion:", err);
     }
   };
+
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
+
+  const getNavLinks = () => {
+    const baseNavLinks = [
+      { id: 1, name: "HOME", link: "/#home" },
+      { id: 2, name: "CARS", link: "/cars" },
+      { id: 3, name: "ABOUT", link: "/#about" },
+    ];   
+
+    if (isLoggedIn) {
+      return [...baseNavLinks, { id: 4, name: "MY BOOKING", link: "/mybooking" }];
+    }
+
+    return baseNavLinks;
+  };
+
+  const navLinks = getNavLinks();
 
   return (
     <div className="relative z-10 shadow-md w-full dark:bg-black dark:text-primary duration-300">
@@ -74,7 +104,7 @@ const Navbar = ({ theme, setTheme, isLoggedIn, setIsLoggedIn }) => {
         </div>
         {/* Navigation pour Tablette & Desktop */}
         <nav className="hidden md:flex items-center gap-8">
-          {Navlinks.map(({ id, name, link }) => (
+          {navLinks.map(({ id, name, link }) => (
             <li key={id} className="py-4 list-none">
               <Link
                 to={link}
@@ -146,6 +176,7 @@ const Navbar = ({ theme, setTheme, isLoggedIn, setIsLoggedIn }) => {
         isLoggedIn={isLoggedIn}
         setIsLoggedIn={setIsLoggedIn}
         showMenu={showMenu}
+        navLinks={navLinks} // Pass navLinks as a prop
       />
     </div>
   );

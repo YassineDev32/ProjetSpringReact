@@ -34,6 +34,7 @@ import UserManagement from "./components/Dashboard/pages/Utilisateurs/UserManage
 import DetailsCar from "./components/Dashboard/pages/DetailsCar"; 
 import ReservationManagement from "./components/Dashboard/pages/Reservations/ReservationManagement";
 import RapportManagement from "./components/Dashboard/pages/Rapports/RapportManagement";
+import MyBooking from "./pages/MyBooking";
 
 // Layout components
 const ClientLayout = ({
@@ -253,6 +254,21 @@ const App = () => {
                   setIsLoggedIn={setIsLoggedIn}
                 >
                   <UserProfile />
+                </ClientLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mybooking"
+            element={
+              <ProtectedRoute allowedRoles={["ROLE_USER", "ROLE_ADMIN"]}>
+                <ClientLayout
+                  theme={theme}
+                  setTheme={setTheme}
+                  isLoggedIn={isLoggedIn}
+                  setIsLoggedIn={setIsLoggedIn}
+                >
+                  <MyBooking />
                 </ClientLayout>
               </ProtectedRoute>
             }

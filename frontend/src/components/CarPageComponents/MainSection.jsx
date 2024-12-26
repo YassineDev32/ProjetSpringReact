@@ -8,6 +8,7 @@ import api from "../../api";
 const MainSection = ({ filters = {} }) => {
   const [isGridView, setIsGridView] = useState(true);
   const [carData, setCarData] = useState([]);
+  const [filteredCars, setFilteredCars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -15,16 +16,26 @@ const MainSection = ({ filters = {} }) => {
   const {
     pickupDate = "",
     dropoffDate = "",
-    priceRange = 500,
-    carModel = "all",
+    priceRange = 2000,  // Default price range
+    carModel = "all",  // Car model filter
+    carMark = "all",   // Car brand (mark) filter
   } = filters;
 
-  // Fetch data from the backend based on filters
+  // Fetch data from the backend whenever any filter changes
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        const response = await api.get("/api/cars/"); // Adjust the URL if necessary
+        setIsLoading(true);
+        let url = "/api/cars/"; // Default URL for all cars
+
+        if (pickupDate && dropoffDate) {
+          // Fetch available cars if both dates are provided
+          url = `/api/cars/available?startDate=${pickupDate}&endDate=${dropoffDate}`;
+        }
+
+        const response = await api.get(url); // Adjust the URL if necessary
         setCarData(response.data);
+        setFilteredCars(response.data); // Initially, no filter is applied
       } catch (err) {
         console.error("Error fetching cars:", err);
         setError("Unable to fetch car data. Please try again later.");
@@ -34,7 +45,26 @@ const MainSection = ({ filters = {} }) => {
     };
 
     fetchCars();
-  }, [pickupDate, dropoffDate, priceRange, carModel]); // Refetch when filters change
+  }, [pickupDate, dropoffDate, priceRange, carModel, carMark]); // Fetch data when any filter changes
+
+  // Filter cars based on the price range and car brand
+  useEffect(() => {
+    const applyFilters = () => {
+      let filtered = carData;
+
+      // Apply price filter
+      filtered = filtered.filter(car => car.price <= priceRange);
+
+      // Apply car mark filter (brand)
+      if (carMark !== "all") {
+        filtered = filtered.filter(car => car.model.mark.name === carMark);
+      }
+
+      setFilteredCars(filtered);
+    };
+
+    applyFilters();
+  }, [priceRange, carData, carMark]); // Apply filters when price range, car data, or car mark changes
 
   return (
     <div className="w-full flex-1">
@@ -57,7 +87,7 @@ const MainSection = ({ filters = {} }) => {
       </div>
 
       <div className={`cars-container overflow-hidden ${isGridView ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" : "space-y-6"}`}>
-        {carData.map((car) => (
+        {filteredCars.map((car) => (
           <div key={car.id} className="bg-white rounded-lg shadow-2xl p-6 flex flex-col justify-between hover:shadow-gray-400 transition duration-300">
             <div className="relative w-full h-[220px] max-md:h-[300px] max-[500px]:h-[200px] overflow-hidden rounded-lg">
               <img className="w-full h-full object-cover" src={`data:image/png;base64,${car.image}`} alt={car.carName} />

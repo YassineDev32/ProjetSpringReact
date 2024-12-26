@@ -38,7 +38,7 @@ const Login = ({ setIsLoggedIn }) => {
       if (userRole === "ROLE_ADMIN") {
         navigate("/admin/dashboard");
       } else if (userRole === "ROLE_USER") {
-        navigate("/user/me");
+        navigate("/mybooking");
       } else {
         setError("Unauthorized role.");
       }
