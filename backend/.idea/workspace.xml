@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="81fe661d-7f12-41d8-b53b-0d2f392fd1f9" name="Changes" comment="test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/CarPageComponents/MainSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/CarPageComponents/MainSection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/CarPageComponents/filterSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/CarPageComponents/filterSection.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,6 +169,7 @@
       <workItem from="1735221843679" duration="2604000" />
       <workItem from="1735228185807" duration="1789000" />
       <workItem from="1735238943186" duration="2181000" />
+      <workItem from="1735249451896" duration="1563000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <option name="closed" value="true" />
