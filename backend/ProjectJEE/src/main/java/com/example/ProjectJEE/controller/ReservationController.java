@@ -29,6 +29,17 @@ public class ReservationController {
         return reservationService.getReservationById(id)
                 .orElseThrow(() -> new RuntimeException("Reservation not found with id " + id));
     }
+    @PutMapping("/{id}/confirm")
+    public ResponseEntity<Void> confirmReservation(@PathVariable Long id) {
+        reservationService.confirmReservation(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}/cancel")
+    public ResponseEntity<Void> cancelReservation(@PathVariable Long id) {
+        reservationService.cancelReservation(id);
+        return ResponseEntity.ok().build();
+    }
     @PostMapping("/create")
     public ResponseEntity<Reservation> createReservation(@RequestBody ReservationDTO request) {
         Reservation reservation = reservationService.createReservation(
