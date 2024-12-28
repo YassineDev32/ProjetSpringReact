@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/reservations")
@@ -29,6 +30,15 @@ public class ReservationController {
         return reservationService.getReservationById(id)
                 .orElseThrow(() -> new RuntimeException("Reservation not found with id " + id));
     }
+    //pour user reservations
+    @GetMapping("/mesreservations/{userId}")
+    public ResponseEntity<List<Reservation>> getReservationsByUser(@PathVariable Long userId) {
+        List<Reservation> reservations = reservationService.getReservationsByUser(userId);
+        if (reservations.isEmpty()) {
+            return ResponseEntity.noContent().build(); // Pas de réservations trouvées
+        }
+        return ResponseEntity.ok(reservations); // Renvoie la liste des réservations
+    }
     @PutMapping("/{id}/confirm")
     public ResponseEntity<Void> confirmReservation(@PathVariable Long id) {
         reservationService.confirmReservation(id);
@@ -39,6 +49,16 @@ public class ReservationController {
     public ResponseEntity<Void> cancelReservation(@PathVariable Long id) {
         reservationService.cancelReservation(id);
         return ResponseEntity.ok().build();
+    }
+    @PutMapping("/update/{reservationId}")
+    public ResponseEntity<Reservation> updateReservationDetails(
+            @PathVariable Long reservationId,
+            @RequestBody Map<String, String> updates) {
+        String phone = updates.get("phone");
+        String address = updates.get("address");
+        Reservation updatedReservation = reservationService.updateReservationDetails(reservationId, phone, address);
+        return ResponseEntity.ok(updatedReservation);
+
     }
     @PostMapping("/create")
     public ResponseEntity<Reservation> createReservation(@RequestBody ReservationDTO request) {

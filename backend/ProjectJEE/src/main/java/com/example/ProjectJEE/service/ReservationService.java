@@ -82,7 +82,9 @@ public class ReservationService {
     public Reservation findById(Long id) {
         return reservationRepository.findById(id).orElse(null);
     }
-
+    public List<Reservation> getReservationsByUser(Long userId) {
+        return reservationRepository.findByUserId(userId);
+    }
     public void confirmReservation(Long reservationId) {
         Reservation reservation = findById(reservationId);
         if (reservation != null) {
@@ -105,6 +107,23 @@ public class ReservationService {
             reservation.setStatus(EnumReservationStatus.CANCELLED);
             reservationRepository.save(reservation);
         }
+    }
+    public Reservation updateReservationDetails(Long id, String phone, String address) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+
+        if (reservation.getStatus() != EnumReservationStatus.PENDING) {
+            throw new IllegalStateException("Only PENDING reservations can be updated.");
+        }
+
+        if (phone != null) {
+            reservation.setPhone(phone);
+        }
+        if (address != null) {
+            reservation.setAddress(address);
+        }
+
+        return reservationRepository.save(reservation);
     }
 
     // Méthode pour calculer le montant total de la réservation
