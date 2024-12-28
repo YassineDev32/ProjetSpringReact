@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BookingForm from "../components/UI/BookingForm";
-import PaymentMethod from "../components/UI/PaymentMethod";
 import Helmet from "../components/UI/Helmet";
 import api from "../api";
 import {
@@ -48,12 +47,12 @@ const CarDetails = () => {
               <img
                 src={`data:image/png;base64,${car.image}`}
                 alt="#"
-                className="w-3/4 rounded-lg"
+                className="w-3/4 mt-[-560px] rounded-lg"
               />
             </div>
             <div>
               <h2 className="text-3xl font-bold mb-6 text-blue-900">
-                {car.model.name +" "+car.model.mark.name}
+                {car.model.name + " " + car.model.mark.name}
               </h2>
               <div className="flex items-center justify-start gap-10 mb-6">
                 <h6 className="text-3xl font-semibold text-green-600">
@@ -61,9 +60,11 @@ const CarDetails = () => {
                 </h6>
                 <div className="flex items-center gap-2">
                   <span className="text-yellow-500 flex">
-                    {Array(5).fill(null).map((_, idx) => (
-                      <Star key={idx} className="text-yellow-500" />
-                    ))}
+                    {Array(5)
+                      .fill(null)
+                      .map((_, idx) => (
+                        <Star key={idx} className="text-yellow-500" />
+                      ))}
                   </span>
                 </div>
               </div>
@@ -102,21 +103,13 @@ const CarDetails = () => {
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12 px-5 lg:px-20">
-            <div>
-              <h5 className="text-2xl font-bold mb-6 text-blue-900">
-                Booking Information
-              </h5>
-              <BookingForm />
-            </div>
-            <div>
-              <h5 className="text-2xl font-bold mb-6 text-blue-900">
-                Payment Information
-              </h5>
-              <PaymentMethod />
+              <div className="mt-8">
+                <h5 className="text-2xl font-bold mb-6 text-blue-900">
+                  Booking Information
+                </h5>
+                <BookingForm />
+              </div>
             </div>
           </div>
         </div>
