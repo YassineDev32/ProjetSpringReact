@@ -85,6 +85,7 @@ public class ReservationService {
     public List<Reservation> getReservationsByUser(Long userId) {
         return reservationRepository.findByUserId(userId);
     }
+    //confirm PENDING reservation
     public void confirmReservation(Long reservationId) {
         Reservation reservation = findById(reservationId);
         if (reservation != null) {
@@ -100,6 +101,7 @@ public class ReservationService {
         }
     }
 
+    //cancel PENDING reservation
     public void cancelReservation(Long reservationId) {
         Reservation reservation = findById(reservationId);
         if (reservation != null) {
@@ -108,6 +110,29 @@ public class ReservationService {
             reservationRepository.save(reservation);
         }
     }
+    public Reservation cancelConfirmedReservation(Long reservationId) {
+        // Récupérer la réservation
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+
+        // Vérifier que le statut est CONFIRMED
+        if (reservation.getStatus() != EnumReservationStatus.CONFIRMED) {
+            throw new IllegalStateException("Only CONFIRMED reservations can be cancelled.");
+        }
+
+        // Mettre à jour le statut de la réservation
+        reservation.setStatus(EnumReservationStatus.CANCELLED);
+
+        // Mettre à jour le statut de la facture associée
+        Invoice invoice = reservation.getInvoice();
+        if (invoice != null) {
+            invoice.setStatus(EnumInvoiceStatus.CANCELLED);
+        }
+
+        // Sauvegarder les changements
+        return reservationRepository.save(reservation);
+    }
+
     public Reservation updateReservationDetails(Long id, String phone, String address) {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
