@@ -5,7 +5,7 @@ import { IoMdSpeedometer } from "react-icons/io";
 import { Link } from "react-router-dom";
 import api from "../../api";
 
-const MainSection = ({ filters = {} }) => {
+const MainSection = ({ filters = {}, isLoggedIn }) => {
   const [isGridView, setIsGridView] = useState(true);
   const [carData, setCarData] = useState([]);
   const [filteredCars, setFilteredCars] = useState([]);

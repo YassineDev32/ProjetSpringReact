@@ -1,24 +1,38 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const BookingForm = () => {
+const BookingForm = ({ isLoggedIn ,userData }) => {
+  const navigate = useNavigate();
+  console.log(userData);
+
   const submitHandler = (event) => {
+
     event.preventDefault();
+    if (!isLoggedIn) {
+      // Redirect to login page if the user is not authenticated
+      navigate("/login");
+    } else {
+      // Proceed with the reservation process
+      console.log("Reservation submitted!");
+    }
   };
 
   return (
     <form
       onSubmit={submitHandler}
-      className="space-y-6 bg-white shadow-lg p-6 rounded-lg"
+      className="space-y-6 text-black bg-white shadow-lg p-6 rounded-lg"
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <input
           type="text"
+          value={userData.firstname}
           placeholder="First Name"
           className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="text"
           placeholder="Last Name"
+          value={userData.lastname}
           className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
@@ -26,25 +40,23 @@ const BookingForm = () => {
         <input
           type="email"
           placeholder="Email"
+          value={userData.email}
           className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="number"
           placeholder="Phone Number"
+          value={userData.numeroTel}
           className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <input
           type="text"
-          placeholder="From Address"
+          placeholder="Address"
           className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <input
-          type="text"
-          placeholder="To Address"
-          className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <select className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">

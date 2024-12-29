@@ -25,7 +25,7 @@ const UserProfile = () => {
       {userData ? (
         <div>
           <p>
-            <strong>Name:</strong> {userData.username}
+            <strong>Name:</strong> {userData.username} {userData.id}
           </p>
           <p>
             <strong>Email:</strong> {userData.email}

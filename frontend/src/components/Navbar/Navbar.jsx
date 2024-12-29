@@ -9,27 +9,8 @@ import ResponsiveMenu from "./ResponsiveMenu";
 const Navbar = ({ theme, setTheme, isLoggedIn, setIsLoggedIn }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [userRole, setUserRole] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUserRole = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/auth/user-role", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        setUserRole(response.data.role);
-      } catch (err) {
-        console.error("Erreur lors de la récupération du rôle de l'utilisateur:", err);
-      }
-    };
-
-    if (isLoggedIn) {
-      fetchUserRole();
-    }
-  }, [isLoggedIn]);
 
   const handleLogout = async () => {
     try {

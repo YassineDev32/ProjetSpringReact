@@ -6,8 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="81fe661d-7f12-41d8-b53b-0d2f392fd1f9" name="Changes" comment="test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/CarPageComponents/MainSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/CarPageComponents/MainSection.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Navbar/Navbar.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/UI/BookingForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/UI/BookingForm.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/pages/CarDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/CarDetails.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/MyBooking.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/MyBooking.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/UserProfile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/UserProfile.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,6 +179,8 @@
       <workItem from="1735249451896" duration="1563000" />
       <workItem from="1735288526851" duration="738000" />
       <workItem from="1735408874362" duration="135000" />
+      <workItem from="1735425874626" duration="4305000" />
+      <workItem from="1735469250112" duration="816000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <option name="closed" value="true" />

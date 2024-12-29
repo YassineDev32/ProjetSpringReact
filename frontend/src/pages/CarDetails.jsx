@@ -12,11 +12,12 @@ import {
   Star,
 } from "@mui/icons-material";
 
-const CarDetails = () => {
+const CarDetails = ({ isLoggedIn }) => {
   const { carId } = useParams();
   const [cars, setCars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userData, setUserData] = useState({});
 
   const car = cars.find((c) => c.id === parseInt(carId));
 
@@ -33,6 +34,20 @@ const CarDetails = () => {
     };
     fetchCars();
   }, []);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      const fetchUserData = async () => {
+        try {
+          const response = await api.get("/user/me");
+          setUserData(response.data);
+        } catch (err) {
+          console.error("Failed to fetch user data", err);
+        }
+      };
+      fetchUserData();
+    }
+  }, [isLoggedIn]);
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -72,8 +87,7 @@ const CarDetails = () => {
               <p className="text-gray-700 mb-8">{car.description}</p>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
-                {[
-                  {
+                {[{
                     icon: <DirectionsCar className="text-blue-600 text-2xl" />,
                     label: `Seats: ${car.seats}`,
                   },
@@ -108,7 +122,7 @@ const CarDetails = () => {
                 <h5 className="text-2xl font-bold mb-6 text-blue-900">
                   Booking Information
                 </h5>
-                <BookingForm />
+                <BookingForm userData={userData} isLoggedIn={isLoggedIn} />
               </div>
             </div>
           </div>

@@ -160,7 +160,7 @@ const App = () => {
                 isLoggedIn={isLoggedIn}
                 setIsLoggedIn={setIsLoggedIn}
               >
-                <CarDetails />
+                <CarDetails isLoggedIn={isLoggedIn}/>
               </ClientLayout>
             }
           />
