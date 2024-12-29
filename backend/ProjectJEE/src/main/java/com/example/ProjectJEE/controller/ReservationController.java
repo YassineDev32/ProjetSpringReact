@@ -1,7 +1,9 @@
 package com.example.ProjectJEE.controller;
 
 import com.example.ProjectJEE.dto.ReservationDTO;
+import com.example.ProjectJEE.model.EnumPaymentMethod;
 import com.example.ProjectJEE.model.Reservation;
+import com.example.ProjectJEE.service.PaymentService;
 import com.example.ProjectJEE.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,8 @@ public class ReservationController {
 
     @Autowired
     private ReservationService reservationService;
+    @Autowired
+    private PaymentService paymentService;
 
     @GetMapping
     public List<Reservation> getAllReservations() {
@@ -49,6 +53,19 @@ public class ReservationController {
     public ResponseEntity<Void> cancelReservation(@PathVariable Long id) {
         reservationService.cancelReservation(id);
         return ResponseEntity.ok().build();
+    }
+    // apres confirmation de validite du payement pour enregistrer dans data
+    @PostMapping("/{id}/pay")
+    public ResponseEntity<Reservation> payReservation(
+            @PathVariable Long id,
+            @RequestParam EnumPaymentMethod method) {
+        Reservation updatedReservation = paymentService.processPayment(id, method);
+        return ResponseEntity.ok(updatedReservation);
+    }
+    @PutMapping("/cancel/{id}")
+    public ResponseEntity<Reservation> cancelConfirmedReservation(@PathVariable Long id) {
+        Reservation cancelledReservation = reservationService.cancelConfirmedReservation(id);
+        return ResponseEntity.ok(cancelledReservation);
     }
     @PutMapping("/update/{reservationId}")
     public ResponseEntity<Reservation> updateReservationDetails(
