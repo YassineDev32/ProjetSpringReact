@@ -5,29 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81fe661d-7f12-41d8-b53b-0d2f392fd1f9" name="Changes" comment="test">
-      <change afterPath="$PROJECT_DIR$/../frontend/public/anas.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/TechnicianDashboard/TechSidebar.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/TechnicianDashboard/TechnicianDashboard.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/TechnicianDashboard/components/MaterialsModal.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/TechnicianDashboard/pages/MaintenancePlanning.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/TechnicianDashboard/pages/Reports.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/TechnicianDashboard/pages/TasksList.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/TechnicianDashboard/pages/TechDashboard.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/TechnicianDashboard/pages/VehicleHistory.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/admin/pages/Stock/StockManagement.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/admin/pages/TableauMaintenance/TableauMaintenance.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/admin/pages/Taches/TachesManagement.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/model/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/model/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/model/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/model/Car.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/AuthenticationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/assets/dummy-data/navLinks.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/assets/dummy-data/navLinks.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/ProtectedRoute.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/ProtectedRoute.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,8 +21,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -200,7 +182,7 @@
       <workItem from="1735469250112" duration="816000" />
       <workItem from="1747329089073" duration="721000" />
       <workItem from="1747330015417" duration="700000" />
-      <workItem from="1747407170034" duration="3865000" />
+      <workItem from="1747407170034" duration="10820000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <option name="closed" value="true" />
