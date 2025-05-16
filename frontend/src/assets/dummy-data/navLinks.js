@@ -5,23 +5,38 @@ const navLinks = [
     display: "Dashboard",
   },
   {
+    path: "/admin/taches",
+    icon: "ri-task-line",
+    display: "Tâches",
+  },
+  {
+    path: "/admin/stock",
+    icon: "ri-store-2-line",
+    display: "Stock",
+  },
+  {
+    path: "/admin/tableau-maintenance",
+    icon: "ri-dashboard-line",
+    display: "Tableau de bord",
+  },
+  {
     path: "/admin/reservations",
     icon: "ri-taxi-line",
     display: "Reservation",
   },
   {
     path: "/admin/vehicule",
-    icon: "ri-taxi-line",
+    icon: "ri-car-line",
     display: "Vehicule",
   },
   {
     path: "/admin/utilisateurs",
-    icon: "ri-taxi-line",
+    icon: "ri-user-line",
     display: "Utilisateurs",
   },
   {
     path: "/admin/rapport",
-    icon: "ri-taxi-line",
+    icon: "ri-file-chart-line",
     display: "Rapport",
   },
   {
@@ -29,6 +44,6 @@ const navLinks = [
     icon: "ri-settings-2-line",
     display: "Settings",
   },
-];
+]
 
-export default navLinks;
+export default navLinks
