@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.14.0",
-    "jspdf": "^2.5.1",
     "@emotion/styled": "^11.14.0",
     "@heroicons/react": "^2.2.0",
     "@material-tailwind/react": "^2.1.10",
@@ -19,6 +18,7 @@
     "@tsparticles/slim": "^3.6.0",
     "aos": "^2.3.4",
     "axios": "^1.7.9",
+    "jspdf": "^2.5.1",
     "jwt-decode": "^4.0.0",
     "landingpage": "file:",
     "react": "^18.3.1",
