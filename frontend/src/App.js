@@ -1,84 +1,83 @@
-import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import AOS from "aos";
-import "aos/dist/aos.css";
+"use client"
+
+import { useEffect, useState } from "react"
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
+import AOS from "aos"
+import "aos/dist/aos.css"
 
 // Components import
-import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
-import ParticlesComponent from "./components/ParticlesBackground/ParticlesBackground";
-import ProtectedRoute from "./components/ProtectedRoute";
+import Navbar from "./components/Navbar/Navbar"
+import Footer from "./components/Footer/Footer"
+import ParticlesComponent from "./components/ParticlesBackground/ParticlesBackground"
+import ProtectedRoute from "./components/ProtectedRoute"
 
 // Pages import
-import LandingPage from "./pages/LandingPage";
-import Login from "./pages/Login";
-import Unauthorized from "./pages/Unauthorized";
-import UserProfile from "./pages/UserProfile";
-import SignUp from "./pages/SignUp";
-import VerificationPage from "./pages/VerificationPage";
-import CarList from "./pages/CarList";
-import CarDetails from "./pages/CarDetails";
-import ProfileSettings from "./pages/ProfileSettings";
-import PasswordResetSent from "./pages/ResetPasswordPages/PasswordResetSent";
-import ResetPassword from "./pages/ResetPasswordPages/ResetPassword";
-import Dashboard from "./pages/Dashboard";
-import DDashboard from "./components/Dashboard/pages/Dashboard";
-import Bookings from "./components/Dashboard/pages/Bookings"; // Import the Bookings component
-import Settings from "./components/Dashboard/pages/Settings"; // Import the Settings component
-import UserManagement from "./components/Dashboard/pages/Utilisateurs/UserManagement"; 
-import DetailsCar from "./components/Dashboard/pages/DetailsCar"; 
-import ReservationManagement from "./components/Dashboard/pages/Reservations/ReservationManagement";
-import RapportManagement from "./components/Dashboard/pages/Rapports/RapportManagement";
-import MyBooking from "./pages/MyBooking";
+import LandingPage from "./pages/LandingPage"
+import Login from "./pages/Login"
+import Unauthorized from "./pages/Unauthorized"
+import UserProfile from "./pages/UserProfile"
+import SignUp from "./pages/SignUp"
+import VerificationPage from "./pages/VerificationPage"
+import CarList from "./pages/CarList"
+import CarDetails from "./pages/CarDetails"
+import ProfileSettings from "./pages/ProfileSettings"
+import PasswordResetSent from "./pages/ResetPasswordPages/PasswordResetSent"
+import ResetPassword from "./pages/ResetPasswordPages/ResetPassword"
+import Dashboard from "./pages/Dashboard"
+import DDashboard from "./components/Dashboard/pages/Dashboard"
+import Bookings from "./components/Dashboard/pages/Bookings" // Import the Bookings component
+import Settings from "./components/Dashboard/pages/Settings" // Import the Settings component
+import UserManagement from "./components/Dashboard/pages/Utilisateurs/UserManagement"
+import DetailsCar from "./components/Dashboard/pages/DetailsCar"
+import ReservationManagement from "./components/Dashboard/pages/Reservations/ReservationManagement"
+import RapportManagement from "./components/Dashboard/pages/Rapports/RapportManagement"
+import MyBooking from "./pages/MyBooking"
+
+// Nouvelles pages admin pour la maintenance
+import TachesManagement from "./components/admin/pages/Taches/TachesManagement"
+import StockManagement from "./components/admin/pages/Stock/StockManagement"
+import TableauMaintenance from "./components/admin/pages/TableauMaintenance/TableauMaintenance"
+
+// Technician Dashboard import
+import TechnicianDashboard from "./components/TechnicianDashboard/TechnicianDashboard"
+import TechDashboard from "./components/TechnicianDashboard/pages/TechDashboard"
+import TasksList from "./components/TechnicianDashboard/pages/TasksList"
+import MaintenancePlanning from "./components/TechnicianDashboard/pages/MaintenancePlanning"
+import VehicleHistory from "./components/TechnicianDashboard/pages/VehicleHistory"
+import Reports from "./components/TechnicianDashboard/pages/Reports"
 
 // Layout components
-const ClientLayout = ({
-  children,
-  theme,
-  setTheme,
-  isLoggedIn,
-  setIsLoggedIn,
-}) => (
+const ClientLayout = ({ children, theme, setTheme, isLoggedIn, setIsLoggedIn }) => (
   <>
-    <Navbar
-      theme={theme}
-      setTheme={setTheme}
-      isLoggedIn={isLoggedIn}
-      setIsLoggedIn={setIsLoggedIn}
-    />
+    <Navbar theme={theme} setTheme={setTheme} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
     {children}
     <Footer />
   </>
-);
+)
 
 const App = () => {
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light")
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []);
+    const token = localStorage.getItem("token")
+    setIsLoggedIn(!!token)
+  }, [])
 
   useEffect(() => {
-    const element = document.documentElement;
+    const element = document.documentElement
     if (theme === "dark") {
-      element.classList.add("dark");
+      element.classList.add("dark")
     } else {
-      element.classList.remove("dark");
+      element.classList.remove("dark")
     }
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+    localStorage.setItem("theme", theme)
+  }, [theme])
 
   useEffect(() => {
-    AOS.init();
-    AOS.refresh();
-  }, []);
+    AOS.init()
+    AOS.refresh()
+  }, [])
 
   return (
     <Router>
@@ -88,12 +87,7 @@ const App = () => {
           <Route
             path="/"
             element={
-              <ClientLayout
-                theme={theme}
-                setTheme={setTheme}
-                isLoggedIn={isLoggedIn}
-                setIsLoggedIn={setIsLoggedIn}
-              >
+              <ClientLayout theme={theme} setTheme={setTheme} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
                 <ParticlesComponent />
                 <LandingPage theme={theme} />
               </ClientLayout>
@@ -102,12 +96,7 @@ const App = () => {
           <Route
             path="/login"
             element={
-              <ClientLayout
-                theme={theme}
-                setTheme={setTheme}
-                isLoggedIn={isLoggedIn}
-                setIsLoggedIn={setIsLoggedIn}
-              >
+              <ClientLayout theme={theme} setTheme={setTheme} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
                 <Login setIsLoggedIn={setIsLoggedIn} />
               </ClientLayout>
             }
@@ -115,12 +104,7 @@ const App = () => {
           <Route
             path="/signup"
             element={
-              <ClientLayout
-                theme={theme}
-                setTheme={setTheme}
-                isLoggedIn={isLoggedIn}
-                setIsLoggedIn={setIsLoggedIn}
-              >
+              <ClientLayout theme={theme} setTheme={setTheme} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
                 <SignUp />
               </ClientLayout>
             }
@@ -128,12 +112,7 @@ const App = () => {
           <Route
             path="/verify"
             element={
-              <ClientLayout
-                theme={theme}
-                setTheme={setTheme}
-                isLoggedIn={isLoggedIn}
-                setIsLoggedIn={setIsLoggedIn}
-              >
+              <ClientLayout theme={theme} setTheme={setTheme} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
                 <VerificationPage />
               </ClientLayout>
             }
@@ -141,12 +120,7 @@ const App = () => {
           <Route
             path="/cars"
             element={
-              <ClientLayout
-                theme={theme}
-                setTheme={setTheme}
-                isLoggedIn={isLoggedIn}
-                setIsLoggedIn={setIsLoggedIn}
-              >
+              <ClientLayout theme={theme} setTheme={setTheme} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
                 <CarList />
               </ClientLayout>
             }
@@ -154,25 +128,15 @@ const App = () => {
           <Route
             path="/cars/:carId"
             element={
-              <ClientLayout
-                theme={theme}
-                setTheme={setTheme}
-                isLoggedIn={isLoggedIn}
-                setIsLoggedIn={setIsLoggedIn}
-              >
-                <CarDetails isLoggedIn={isLoggedIn}/>
+              <ClientLayout theme={theme} setTheme={setTheme} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
+                <CarDetails isLoggedIn={isLoggedIn} />
               </ClientLayout>
             }
           />
           <Route
             path="/edit-profile"
             element={
-              <ClientLayout
-                theme={theme}
-                setTheme={setTheme}
-                isLoggedIn={isLoggedIn}
-                setIsLoggedIn={setIsLoggedIn}
-              >
+              <ClientLayout theme={theme} setTheme={setTheme} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
                 <ProfileSettings />
               </ClientLayout>
             }
@@ -180,12 +144,7 @@ const App = () => {
           <Route
             path="/password-reset-sent"
             element={
-              <ClientLayout
-                theme={theme}
-                setTheme={setTheme}
-                isLoggedIn={isLoggedIn}
-                setIsLoggedIn={setIsLoggedIn}
-              >
+              <ClientLayout theme={theme} setTheme={setTheme} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
                 <PasswordResetSent />
               </ClientLayout>
             }
@@ -193,12 +152,7 @@ const App = () => {
           <Route
             path="/reset-password"
             element={
-              <ClientLayout
-                theme={theme}
-                setTheme={setTheme}
-                isLoggedIn={isLoggedIn}
-                setIsLoggedIn={setIsLoggedIn}
-              >
+              <ClientLayout theme={theme} setTheme={setTheme} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
                 <ResetPassword />
               </ClientLayout>
             }
@@ -206,38 +160,40 @@ const App = () => {
           <Route
             path="/unauthorized"
             element={
-              <ClientLayout
-                theme={theme}
-                setTheme={setTheme}
-                isLoggedIn={isLoggedIn}
-                setIsLoggedIn={setIsLoggedIn}
-              >
+              <ClientLayout theme={theme} setTheme={setTheme} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
                 <Unauthorized />
               </ClientLayout>
             }
           />
           {/* Admin Protected Routes */}
-          <Route
-            path="/admin/*"
-            element={
-              <ProtectedRoute allowedRoles={["ROLE_ADMIN"]}>
-                {/* The Dashboard layout is now rendered for any path under /admin */}
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          >
+          <Route path="/admin/*" element={<Dashboard />}>
             {/* Nested Routes inside the Dashboard layout */}
-            <Route
-              path="dashboard"
-              element={<DDashboard />}
-            />
-            {/* Replace with actual content */}
+            <Route path="dashboard" element={<DDashboard />} />
+            <Route path="taches" element={<TachesManagement />} />
+            <Route path="stock" element={<StockManagement />} />
+            <Route path="tableau-maintenance" element={<TableauMaintenance />} />
             <Route path="vehicule" element={<Bookings />} />
             <Route path="utilisateurs" element={<UserManagement />} />
             <Route path="reservations" element={<ReservationManagement />} />
             <Route path="rapport" element={<RapportManagement />} />
             <Route path="settings" element={<Settings />} />
             <Route path="vehicule/:carId" element={<DetailsCar />} />
+          </Route>
+
+          {/* Technician Protected Routes */}
+          <Route
+            path="/tech/*"
+            element={
+              <ProtectedRoute allowedRoles={["ROLE_TECH", "ROLE_ADMIN"]}>
+                <TechnicianDashboard />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="dashboard" element={<TechDashboard />} />
+            <Route path="tasks" element={<TasksList />} />
+            <Route path="planning" element={<MaintenancePlanning />} />
+            <Route path="history" element={<VehicleHistory />} />
+            <Route path="reports" element={<Reports />} />
           </Route>
 
           {/* Catch-all redirect */}
@@ -247,12 +203,7 @@ const App = () => {
             path="/user/me"
             element={
               <ProtectedRoute allowedRoles={["ROLE_USER", "ROLE_ADMIN"]}>
-                <ClientLayout
-                  theme={theme}
-                  setTheme={setTheme}
-                  isLoggedIn={isLoggedIn}
-                  setIsLoggedIn={setIsLoggedIn}
-                >
+                <ClientLayout theme={theme} setTheme={setTheme} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
                   <UserProfile />
                 </ClientLayout>
               </ProtectedRoute>
@@ -262,12 +213,7 @@ const App = () => {
             path="/mybooking"
             element={
               <ProtectedRoute allowedRoles={["ROLE_USER", "ROLE_ADMIN"]}>
-                <ClientLayout
-                  theme={theme}
-                  setTheme={setTheme}
-                  isLoggedIn={isLoggedIn}
-                  setIsLoggedIn={setIsLoggedIn}
-                >
+                <ClientLayout theme={theme} setTheme={setTheme} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
                   <MyBooking />
                 </ClientLayout>
               </ProtectedRoute>
@@ -276,7 +222,7 @@ const App = () => {
         </Routes>
       </div>
     </Router>
-  );
-};
+  )
+}
 
-export default App;
+export default App
