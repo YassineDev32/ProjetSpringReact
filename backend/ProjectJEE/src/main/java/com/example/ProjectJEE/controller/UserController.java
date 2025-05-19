@@ -135,4 +135,10 @@ public class UserController {
             throw new RuntimeException("Error while retrieving tech list");
         }
     }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
+        System.out.println("username passed : " + username) ;
+        return ResponseEntity.ok(userService.findByUsername(username));
+    }
 }

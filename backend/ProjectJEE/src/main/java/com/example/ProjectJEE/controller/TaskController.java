@@ -4,6 +4,7 @@ import com.example.ProjectJEE.dto.TaskRequest;
 import com.example.ProjectJEE.model.*;
 import com.example.ProjectJEE.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -16,6 +17,11 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+
+    @GetMapping
+    public List<Task> getAllTasks() {
+        return taskService.getAllTasks();
+    }
 
     @PostMapping
     public Task createTask(@RequestBody TaskRequest request) {
@@ -32,9 +38,9 @@ public class TaskController {
         );
     }
 
-    @GetMapping("/technician/{technicianId}")
-    public List<Task> getTasksByTechnician(@PathVariable Long technicianId) {
-        return taskService.getTasksByTechnician(technicianId);
+    @GetMapping("/technician/{technicianUsername}")
+    public List<Task> getTasksByTechnician(@PathVariable String technicianUsername) {
+        return taskService.getTasksByTechnician(technicianUsername);
     }
 
     @GetMapping("/car/{carId}")
@@ -47,8 +53,13 @@ public class TaskController {
         return taskService.updateTaskStatus(taskId, status);
     }
 
-    @PutMapping("/{taskId}/reassign")
-    public Task reassignTask(@PathVariable Long taskId, @RequestParam Long technicianId) {
-        return taskService.reassignTask(taskId, technicianId);
+    @PutMapping("/updateTask")
+    public Task reassignTask(@RequestBody Task task) {
+        return taskService.updateTask(task);
+    }
+
+    @DeleteMapping("/{taskId}")
+    public void deleteTask(@PathVariable Long taskId) {
+         taskService.deleteTask(taskId);
     }
 }

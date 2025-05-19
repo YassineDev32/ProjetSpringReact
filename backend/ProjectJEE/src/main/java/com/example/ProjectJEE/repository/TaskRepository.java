@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    List<Task> findByTechnicianId(Long technicianId);
+    List<Task> findByTechnicianUsername(String username);
     List<Task> findByCarId(Long carId);
     List<Task> findByStatus(TaskStatus status);
     List<Task> findByDate(LocalDate date);

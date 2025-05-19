@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import api from "../../../../api"
 
 const TachesManagement = () => {
   const [searchTerm, setSearchTerm] = useState("")
@@ -20,9 +21,52 @@ const TachesManagement = () => {
     time: "",
     type: "maintenance",
   })
+  const [tasks, setTasks] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [cars, setCars] = useState([])
+  const [techniciens, setTechniciens] = useState([])
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        setLoading(true)
+        const response = await api.get("/api/tasks")
+        setTasks(response.data)
+        setError(null)
+      } catch (err) {
+        console.error("Error fetching tasks:", err)
+        setError("Erreur lors du chargement des tâches. Veuillez réessayer.")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    const fetchCars = async () => {
+      try {
+        const response = await api.get("/api/cars/")
+        setCars(response.data)
+      } catch (err) {
+        console.error("Error fetching cars:", err)
+      }
+    }
+
+    const fetchTechnicians = async () => {
+      try {
+        const response = await api.get("/user/gettech")
+        setTechniciens(response.data)
+      } catch (err) {
+        console.error("Error fetching technicians:", err)
+      }
+    }
+
+    fetchTasks()
+    fetchCars()
+    fetchTechnicians()
+  }, [])
 
   // Données fictives pour la démonstration
-  const tasks = [
+  /*const tasks = [
     {
       id: 1,
       title: "Vidange moteur",
@@ -88,26 +132,46 @@ const TachesManagement = () => {
       time: "10:00",
       type: "maintenance",
     },
-  ]
+  ]*/
 
   // Liste des techniciens
-  const techniciens = [
+  /*const techniciens = [
     { id: 1, name: "Thomas Dupont", speciality: "Mécanique générale" },
     { id: 2, name: "Sophie Martin", speciality: "Électronique" },
     { id: 3, name: "Lucas Bernard", speciality: "Diagnostic" },
     { id: 4, name: "Emma Petit", speciality: "Carrosserie" },
-  ]
+  ]*/
+
+  const mapTaskFromBackend = (task) => {
+    return {
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      vehicle: task.car ? `${task.car.id} - ${task.car.model.name}` : "",
+      plate: task.car ? task.car.matricule : "",
+      technicien: task.technician
+        ? `${task.technician.id} - ${task.technician.firstname} ${task.technician.lastname}`
+        : "",
+      priority: task.priority ? task.priority.toLowerCase() : "medium",
+      status: task.status ? task.status.toLowerCase().replace("_", "-") : "pending",
+      date: task.date,
+      time: task.time,
+      type: task.type ? task.type.toLowerCase() : "maintenance",
+    }
+  }
 
   // Filtrer les tâches
-  const filteredTasks = tasks.filter(
-    (task) =>
-      (filterStatus === "all" || task.status === filterStatus) &&
-      (filterPriority === "all" || task.priority === filterPriority) &&
-      (task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.vehicle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.plate.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.technicien.toLowerCase().includes(searchTerm.toLowerCase())),
-  )
+  const filteredTasks = tasks
+    .map(mapTaskFromBackend)
+    .filter(
+      (task) =>
+        (filterStatus === "all" || task.status === filterStatus) &&
+        (filterPriority === "all" || task.priority === filterPriority) &&
+        (task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          task.vehicle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          task.plate.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          task.technicien.toLowerCase().includes(searchTerm.toLowerCase())),
+    )
 
   // Gérer l'ouverture du modal pour ajouter/modifier une tâche
   const handleOpenModal = (task = null) => {
@@ -133,11 +197,49 @@ const TachesManagement = () => {
   }
 
   // Gérer la soumission du formulaire
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Logique pour ajouter ou modifier une tâche
-    console.log("Formulaire soumis:", formData)
-    setShowModal(false)
+
+    try {
+      // Extract car ID from the vehicle string
+      const carId = formData.vehicle ? Number.parseInt(formData.vehicle.split("-")[0].trim()) : null
+
+      // Extract technician ID from the technicien string
+      const technicianId = formData.technicien ? Number.parseInt(formData.technicien.split("-")[0].trim()) : null
+
+      if (!carId || !technicianId) {
+        alert("Veuillez sélectionner un véhicule et un technicien")
+        return
+      }
+
+      const taskData = {
+        title: formData.title,
+        description: formData.description,
+        priority: formData.priority.toUpperCase(),
+        type: formData.type.toUpperCase(),
+        date: formData.date,
+        time: formData.time,
+        car: { id: carId },
+        technician: { id: technicianId },
+      }
+
+      if (selectedTask) {
+        // Update existing task
+        await api.put(`/api/tasks/updateTask`, taskData)
+      } else {
+        // Create new task
+        await api.post("/api/tasks", taskData)
+      }
+
+      // Refresh tasks list
+      const response = await api.get("/api/tasks")
+      setTasks(response.data)
+
+      setShowModal(false)
+    } catch (err) {
+      console.error("Error saving task:", err)
+      alert("Erreur lors de l'enregistrement de la tâche. Veuillez réessayer.")
+    }
   }
 
   // Fonctions pour obtenir les labels et couleurs
@@ -205,6 +307,20 @@ const TachesManagement = () => {
         return "Inspection"
       default:
         return type
+    }
+  }
+
+  const handleDeleteTask = async (taskId) => {
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer cette tâche ?")) {
+      try {
+        await api.delete(`/api/tasks/${taskId}`)
+        // Refresh tasks list
+        const response = await api.get("/api/tasks")
+        setTasks(response.data)
+      } catch (err) {
+        console.error("Error deleting task:", err)
+        alert("Erreur lors de la suppression de la tâche. Veuillez réessayer.")
+      }
     }
   }
 
@@ -378,7 +494,9 @@ const TachesManagement = () => {
                     <button onClick={() => handleOpenModal(task)} className="text-green-400 hover:text-green-300 mr-3">
                       Modifier
                     </button>
-                    <button className="text-red-400 hover:text-red-300">Supprimer</button>
+                    <button onClick={() => handleDeleteTask(task.id)} className="text-red-400 hover:text-red-300">
+                      Supprimer
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -448,6 +566,25 @@ const TachesManagement = () => {
           </div>
         </div>
       </div>
+
+      {/* Loading and error states */}
+      {loading && (
+        <div className="flex justify-center items-center p-8">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
+        </div>
+      )}
+
+      {error && (
+        <div className="bg-red-900/30 text-red-400 border border-red-500/30 p-4 rounded-lg my-4">
+          <p>{error}</p>
+        </div>
+      )}
+
+      {!loading && tasks.length === 0 && !error && (
+        <div className="bg-gray-800 p-8 text-center rounded-lg my-4">
+          <p className="text-gray-400">Aucune tâche trouvée</p>
+        </div>
+      )}
 
       {/* Modal pour ajouter/modifier une tâche */}
       {showModal && (
@@ -523,14 +660,30 @@ const TachesManagement = () => {
                   <label htmlFor="vehicle" className="block text-sm font-medium text-gray-400 mb-1">
                     Véhicule
                   </label>
-                  <input
-                    type="text"
+                  <select
                     id="vehicle"
                     value={formData.vehicle}
-                    onChange={(e) => setFormData({ ...formData, vehicle: e.target.value })}
+                    onChange={(e) => {
+                      const selectedCar = cars.find((car) => `${car.id}` === e.target.value.split("-")[0].trim())
+                      setFormData({
+                        ...formData,
+                        vehicle: e.target.value,
+                        plate: selectedCar ? selectedCar.matricule : "",
+                      })
+                    }}
                     className="w-full px-4 py-2 rounded-lg border border-gray-700 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     required
-                  />
+                  >
+                    <option value="">Sélectionner un véhicule</option>
+                    {cars.map((car) => (
+                      <option
+                        key={car.id}
+                        value={`${car.id} - ${car.model?.name || "N/A"} ${car.model?.mark?.name || ""}`}
+                      >
+                        {car.model?.name || "N/A"} {car.model?.mark?.name || ""} - {car.matricule}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div>
@@ -541,9 +694,8 @@ const TachesManagement = () => {
                     type="text"
                     id="plate"
                     value={formData.plate}
-                    onChange={(e) => setFormData({ ...formData, plate: e.target.value })}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-700 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    required
+                    readOnly
+                    className="w-full px-4 py-2 rounded-lg border border-gray-700 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-700"
                   />
                 </div>
 
@@ -560,8 +712,8 @@ const TachesManagement = () => {
                   >
                     <option value="">Sélectionner un technicien</option>
                     {techniciens.map((tech) => (
-                      <option key={tech.id} value={tech.name}>
-                        {tech.name} - {tech.speciality}
+                      <option key={tech.id} value={`${tech.id} - ${tech.firstname} ${tech.lastname}`}>
+                        {tech.firstname} {tech.lastname} - {tech.role === "TECHNICIAN" ? "Technicien" : tech.role}
                       </option>
                     ))}
                   </select>

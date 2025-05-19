@@ -53,8 +53,8 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
-    public List<Task> getTasksByTechnician(Long technicianId) {
-        return taskRepository.findByTechnicianId(technicianId);
+    public List<Task> getTasksByTechnician(String username) {
+        return taskRepository.findByTechnicianUsername(username);
     }
 
     public List<Task> getTasksByCar(Long carId) {
@@ -89,5 +89,14 @@ public class TaskService {
 
     public void deleteTask(Long taskId) {
         taskRepository.deleteById(taskId);
+    }
+
+    public Task updateTask(Task task) {
+        try{
+            return  taskRepository.save(task);
+        }
+        catch (Exception e) {
+            throw new IllegalArgumentException("Task not found");
+        }
     }
 }

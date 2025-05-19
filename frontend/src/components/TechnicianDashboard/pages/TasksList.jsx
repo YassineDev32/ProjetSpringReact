@@ -1,7 +1,8 @@
-"use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import MaterialsModal from "../components/MaterialsModal"
+import api from "../../../api"
+import { jwtDecode } from "jwt-decode"
 
 const TasksList = () => {
   const [filter, setFilter] = useState("all")
@@ -10,6 +11,35 @@ const TasksList = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [taskDetailsModal, setTaskDetailsModal] = useState(false)
   const [taskDetails, setTaskDetails] = useState(null)
+  const [tasks, setTasks] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [confirmModal, setConfirmModal] = useState(false)
+  const [actionType, setActionType] = useState(null)
+  const [taskToUpdate, setTaskToUpdate] = useState(null)
+
+  // Fetch tasks from the database
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        setLoading(true)
+        
+        const username = jwtDecode(localStorage.getItem("token")).sub;
+        console.log(username);
+         
+        const response = await api.get(`/api/tasks/technician/${username}`)
+        setTasks(response.data)
+        setError(null)
+      } catch (err) {
+        console.error("Error fetching tasks:", err)
+        setError("Erreur lors du chargement des tâches. Veuillez réessayer.")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTasks()
+  }, [])  
 
   // Handle showing task details
   const showTaskDetails = (task) => {
@@ -17,103 +47,34 @@ const TasksList = () => {
     setTaskDetailsModal(true)
   }
 
-  // Données fixes pour la démonstration
-  const tasks = [
-    {
-      id: 1,
-      title: "Vidange moteur",
-      description: "Changement d'huile et filtre à huile",
-      date: "2023-05-15",
-      time: "14:30",
-      vehicle: "Renault Clio",
-      plate: "AB-123-CD",
-      status: "pending",
-      priority: "medium",
-      type: "maintenance",
-    },
-    {
-      id: 2,
-      title: "Remplacement plaquettes de frein",
-      description: "Remplacement des plaquettes avant et arrière",
-      date: "2023-05-15",
-      time: "16:00",
-      vehicle: "Peugeot 308",
-      plate: "EF-456-GH",
-      status: "in-progress",
-      priority: "medium",
-      type: "repair",
-    },
-    {
-      id: 3,
-      title: "Diagnostic système électrique",
-      description: "Problème de démarrage intermittent - Batterie défectueuse",
-      date: "2023-05-16",
-      time: "09:15",
-      vehicle: "Citroën C3",
-      plate: "IJ-789-KL",
-      status: "pending",
-      priority: "high",
-      type: "electrical",
-    },
-    {
-      id: 4,
-      title: "Contrôle technique",
-      description: "Préparation et passage au contrôle technique",
-      date: "2023-05-16",
-      time: "11:00",
-      vehicle: "Volkswagen Golf",
-      plate: "MN-012-OP",
-      status: "pending",
-      priority: "low",
-      type: "inspection",
-    },
-    {
-      id: 5,
-      title: "Changement courroie de distribution",
-      description: "Remplacement de la courroie et vérification de la pompe à eau",
-      date: "2023-05-17",
-      time: "10:00",
-      vehicle: "Toyota Yaris",
-      plate: "QR-345-ST",
-      status: "pending",
-      priority: "high",
-      type: "maintenance",
-    },
-    {
-      id: 6,
-      title: "Réparation climatisation",
-      description: "Recharge de gaz et vérification du circuit",
-      date: "2023-05-17",
-      time: "14:00",
-      vehicle: "Renault Megane",
-      plate: "UV-678-WX",
-      status: "completed",
-      priority: "medium",
-      type: "climate",
-    },
-    {
-      id: 7,
-      title: "Remplacement amortisseurs",
-      description: "Changement des amortisseurs avant",
-      date: "2023-05-18",
-      time: "09:00",
-      vehicle: "Peugeot 208",
-      plate: "YZ-901-AB",
-      status: "completed",
-      priority: "medium",
-      type: "suspension",
-    },
-  ]
+  // Map task from backend format
+  const mapTaskFromBackend = (task) => {
+    return {
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      vehicle: task.car ? `${task.car.model?.name || ""} ${task.car.model?.mark?.name || ""}` : "",
+      plate: task.car ? task.car.matricule : "",
+      status: task.status ? task.status.toLowerCase().replace("_", "-") : "pending",
+      priority: task.priority ? task.priority.toLowerCase() : "medium",
+      type: task.type ? task.type.toLowerCase() : "maintenance",
+      date: task.date,
+      time: task.time,
+    }
+  }
 
-  const filteredTasks = tasks.filter(
-    (task) =>
-      (filter === "all" || task.status === filter) &&
-      (searchTerm === "" ||
-        task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.vehicle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.plate.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.description.toLowerCase().includes(searchTerm.toLowerCase())),
-  )
+  // Filter tasks based on search term and filter
+  const filteredTasks = tasks
+    .map(mapTaskFromBackend)
+    .filter(
+      (task) =>
+        (filter === "all" || task.status === filter) &&
+        (searchTerm === "" ||
+          task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          task.vehicle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          task.plate.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          task.description.toLowerCase().includes(searchTerm.toLowerCase())),
+    )
 
   const getStatusLabel = (status) => {
     switch (status) {
@@ -168,8 +129,51 @@ const TasksList = () => {
   }
 
   const handleStartTask = (task) => {
-    setSelectedTask(task)
-    setShowModal(true)
+    setTaskToUpdate(task)
+    setActionType("start")
+    setConfirmModal(true)
+  }
+
+  const handleCompleteTask = (task) => {
+    setTaskToUpdate(task)
+    setActionType("complete")
+    setConfirmModal(true)
+  }
+
+  const confirmAction = async () => {
+    try {
+      if (!taskToUpdate) return
+
+      const taskId = taskToUpdate.id
+      const newStatus = actionType === "start" ? "IN_PROGRESS" : "COMPLETED"
+
+      await api.put(`/api/tasks/${taskId}/status`, null, {
+        params: { status: newStatus },
+      })
+
+      // Refresh tasks list
+      const username = jwtDecode(localStorage.getItem("token")).sub;
+      console.log(username);
+       
+      const response = await api.get(`/api/tasks/technician/${username}`)
+      setTasks(response.data)
+
+      // Close modals
+      setConfirmModal(false)
+      setTaskToUpdate(null)
+      setActionType(null)
+
+      // If task details modal is open, update the task details
+      if (taskDetailsModal && taskDetails && taskDetails.id === taskId) {
+        const updatedTask = response.data.find((task) => task.id === taskId)
+        if (updatedTask) {
+          setTaskDetails(mapTaskFromBackend(updatedTask))
+        }
+      }
+    } catch (err) {
+      console.error("Error updating task status:", err)
+      alert("Erreur lors de la mise à jour du statut de la tâche. Veuillez réessayer.")
+    }
   }
 
   return (
@@ -220,173 +224,202 @@ const TasksList = () => {
         </div>
       </div>
 
-      {/* Tasks List */}
-      <div className="bg-gray-900 rounded-lg shadow-md overflow-hidden border border-gray-800">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-800">
-            <thead className="bg-gray-800">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                >
-                  Tâche
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                >
-                  Véhicule
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                >
-                  Date & Heure
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                >
-                  Priorité
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                >
-                  Statut
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider"
-                >
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-gray-900 divide-y divide-gray-800">
-              {filteredTasks.map((task) => (
-                <tr key={task.id} className="hover:bg-gray-800">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div>
-                        <div className="text-sm font-medium text-white">{task.title}</div>
-                        <div className="text-sm text-gray-400">{task.description}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-white">{task.vehicle}</div>
-                    <div className="text-sm text-gray-400">{task.plate}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-white">{task.date}</div>
-                    <div className="text-sm text-gray-400">{task.time}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getPriorityColor(
-                        task.priority,
-                      )}`}
-                    >
-                      {getPriorityLabel(task.priority)}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(
-                        task.status,
-                      )}`}
-                    >
-                      {getStatusLabel(task.status)}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button onClick={() => showTaskDetails(task)} className="text-green-400 hover:text-green-300 mr-3">
-                      Détails
-                    </button>
-                    {task.status === "pending" && (
-                      <button
-                        onClick={() => handleStartTask(task)}
-                        className="text-green-400 hover:text-green-300 bg-green-900/20 px-3 py-1 rounded-md border border-green-500/30"
-                      >
-                        Démarrer
-                      </button>
-                    )}
-                    {task.status === "in-progress" && (
-                      <button className="text-green-400 hover:text-green-300 bg-green-900/20 px-3 py-1 rounded-md border border-green-500/30">
-                        Terminer
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {/* Loading state */}
+      {loading && (
+        <div className="flex justify-center items-center p-8">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
         </div>
+      )}
 
-        {/* Pagination */}
-        <div className="bg-gray-900 px-4 py-3 flex items-center justify-between border-t border-gray-800 sm:px-6">
-          <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-            <div>
-              <p className="text-sm text-gray-400">
-                Affichage de <span className="font-medium">1</span> à{" "}
-                <span className="font-medium">{filteredTasks.length}</span> sur{" "}
-                <span className="font-medium">{filteredTasks.length}</span> résultats
-              </p>
-            </div>
-            <div>
-              <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                <a
-                  href="#"
-                  className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-700 bg-gray-800 text-sm font-medium text-gray-400 hover:bg-gray-700"
-                >
-                  <span className="sr-only">Précédent</span>
-                  <svg
-                    className="h-5 w-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
+      {/* Error state */}
+      {error && (
+        <div className="bg-red-900/30 text-red-400 border border-red-500/30 p-4 rounded-lg my-4">
+          <p>{error}</p>
+        </div>
+      )}
+
+      {/* Empty state */}
+      {!loading && filteredTasks.length === 0 && !error && (
+        <div className="bg-gray-800 p-8 text-center rounded-lg my-4">
+          <p className="text-gray-400">Aucune tâche trouvée</p>
+        </div>
+      )}
+
+      {/* Tasks List */}
+      {!loading && filteredTasks.length > 0 && (
+        <div className="bg-gray-900 rounded-lg shadow-md overflow-hidden border border-gray-800">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-800">
+              <thead className="bg-gray-800">
+                <tr>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
                   >
-                    <path
-                      fillRule="evenodd"
-                      d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </a>
-                <a
-                  href="#"
-                  aria-current="page"
-                  className="z-10 bg-green-900/30 border-green-500 text-green-400 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-                >
-                  1
-                </a>
-                <a
-                  href="#"
-                  className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-700 bg-gray-800 text-sm font-medium text-gray-400 hover:bg-gray-700"
-                >
-                  <span className="sr-only">Suivant</span>
-                  <svg
-                    className="h-5 w-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
+                    Tâche
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
                   >
-                    <path
-                      fillRule="evenodd"
-                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </a>
-              </nav>
+                    Véhicule
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                  >
+                    Date & Heure
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                  >
+                    Priorité
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                  >
+                    Statut
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider"
+                  >
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-gray-900 divide-y divide-gray-800">
+                {filteredTasks.map((task) => (
+                  <tr key={task.id} className="hover:bg-gray-800">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div>
+                          <div className="text-sm font-medium text-white">{task.title}</div>
+                          <div className="text-sm text-gray-400">{task.description}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-white">{task.vehicle}</div>
+                      <div className="text-sm text-gray-400">{task.plate}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-white">{task.date}</div>
+                      <div className="text-sm text-gray-400">{task.time}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span
+                        className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getPriorityColor(
+                          task.priority,
+                        )}`}
+                      >
+                        {getPriorityLabel(task.priority)}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span
+                        className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(
+                          task.status,
+                        )}`}
+                      >
+                        {getStatusLabel(task.status)}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <button
+                        onClick={() => showTaskDetails(task)}
+                        className="text-green-400 hover:text-green-300 mr-3"
+                      >
+                        Détails
+                      </button>
+                      {task.status === "pending" && (
+                        <button
+                          onClick={() => handleStartTask(task)}
+                          className="text-green-400 hover:text-green-300 bg-green-900/20 px-3 py-1 rounded-md border border-green-500/30"
+                        >
+                          Démarrer
+                        </button>
+                      )}
+                      {task.status === "in-progress" && (
+                        <button
+                          onClick={() => handleCompleteTask(task)}
+                          className="text-green-400 hover:text-green-300 bg-green-900/20 px-3 py-1 rounded-md border border-green-500/30"
+                        >
+                          Terminer
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Pagination */}
+          <div className="bg-gray-900 px-4 py-3 flex items-center justify-between border-t border-gray-800 sm:px-6">
+            <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+              <div>
+                <p className="text-sm text-gray-400">
+                  Affichage de <span className="font-medium">1</span> à{" "}
+                  <span className="font-medium">{filteredTasks.length}</span> sur{" "}
+                  <span className="font-medium">{filteredTasks.length}</span> résultats
+                </p>
+              </div>
+              <div>
+                <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                  <a
+                    href="#"
+                    className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-700 bg-gray-800 text-sm font-medium text-gray-400 hover:bg-gray-700"
+                  >
+                    <span className="sr-only">Précédent</span>
+                    <svg
+                      className="h-5 w-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    href="#"
+                    aria-current="page"
+                    className="z-10 bg-green-900/30 border-green-500 text-green-400 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+                  >
+                    1
+                  </a>
+                  <a
+                    href="#"
+                    className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-700 bg-gray-800 text-sm font-medium text-gray-400 hover:bg-gray-700"
+                  >
+                    <span className="sr-only">Suivant</span>
+                    <svg
+                      className="h-5 w-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </a>
+                </nav>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Task Details Modal */}
       {taskDetailsModal && taskDetails && (
@@ -522,6 +555,17 @@ const TasksList = () => {
                     Démarrer la tâche
                   </button>
                 )}
+                {taskDetails.status === "in-progress" && (
+                  <button
+                    onClick={() => {
+                      setTaskDetailsModal(false)
+                      handleCompleteTask(taskDetails)
+                    }}
+                    className="px-4 py-2 text-black bg-green-400 rounded-md hover:bg-green-500"
+                  >
+                    Terminer la tâche
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -530,6 +574,60 @@ const TasksList = () => {
 
       {/* Materials Modal */}
       {showModal && <MaterialsModal task={selectedTask} onClose={() => setShowModal(false)} />}
+
+      {/* Confirmation Modal */}
+      {confirmModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+          <div className="bg-gray-900 rounded-lg shadow-xl max-w-md w-full overflow-hidden border border-gray-800">
+            <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center bg-gray-800">
+              <h3 className="text-xl font-semibold text-white">Confirmation</h3>
+              <button
+                onClick={() => {
+                  setConfirmModal(false)
+                  setTaskToUpdate(null)
+                  setActionType(null)
+                }}
+                className="text-gray-400 hover:text-white focus:outline-none"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-6">
+              <p className="text-white mb-6">
+                {actionType === "start"
+                  ? "Êtes-vous sûr de vouloir démarrer cette tâche ? Le statut sera changé à 'En cours'."
+                  : "Êtes-vous sûr de vouloir terminer cette tâche ? Le statut sera changé à 'Terminée'."}
+              </p>
+              <div className="flex justify-end space-x-3">
+                <button
+                  onClick={() => {
+                    setConfirmModal(false)
+                    setTaskToUpdate(null)
+                    setActionType(null)
+                  }}
+                  className="px-4 py-2 text-gray-300 bg-gray-800 rounded-md hover:bg-gray-700"
+                >
+                  Annuler
+                </button>
+                <button
+                  onClick={confirmAction}
+                  className="px-4 py-2 text-black bg-green-400 rounded-md hover:bg-green-500"
+                >
+                  Confirmer
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

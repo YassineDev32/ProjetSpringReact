@@ -41,7 +41,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/user/me").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/user/update").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/user/delete/**").hasRole("ADMIN")// Both USER and ADMIN can access /user/me
-                        .requestMatchers("/user/**").hasRole("ADMIN")  // Only ADMIN can access /user/*
+                        .requestMatchers("/user/**").hasAnyRole("ADMIN","TECH")  // Only ADMIN can access /user/*
                         .anyRequest().authenticated()  // All others require authentication
                 )
                 .sessionManagement(session -> session
