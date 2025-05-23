@@ -6,13 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="81fe661d-7f12-41d8-b53b-0d2f392fd1f9" name="Changes" comment="test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/config/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/TaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/repository/TaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/repository/TaskRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/JwtService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/TaskService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,9 +18,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
-        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -190,7 +183,8 @@
       <workItem from="1747329089073" duration="721000" />
       <workItem from="1747330015417" duration="700000" />
       <workItem from="1747407170034" duration="11565000" />
-      <workItem from="1747670627417" duration="10664000" />
+      <workItem from="1747670627417" duration="11473000" />
+      <workItem from="1747922038688" duration="3156000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <option name="closed" value="true" />
