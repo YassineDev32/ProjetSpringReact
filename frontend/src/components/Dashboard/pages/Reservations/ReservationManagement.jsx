@@ -28,62 +28,61 @@ const ReservationManagement = () => {
   };
 
   const filteredReservations = reservations
-  .filter(reservation =>
-    (!filters.status || reservation.status.toLowerCase().includes(filters.status.toLowerCase()))
-  )
-  .sort((a, b) => {
-    if (filters.dateOrder === 'newest') {
-      return new Date(b.startDate) - new Date(a.startDate);
-    }
-    if (filters.dateOrder === 'oldest') {
-      return new Date(a.startDate) - new Date(b.startDate);
-    }
-    return 0; // Pas de tri si aucun ordre sélectionné
-  });
+    .filter(reservation =>
+      (!filters.status || reservation.status.toLowerCase().includes(filters.status.toLowerCase()))
+    )
+    .sort((a, b) => {
+      if (filters.dateOrder === 'newest') {
+        return new Date(b.startDate) - new Date(a.startDate);
+      }
+      if (filters.dateOrder === 'oldest') {
+        return new Date(a.startDate) - new Date(b.startDate);
+      }
+      return 0; // Pas de tri si aucun ordre sélectionné
+    });
 
-
-  const handleDelete = async (id) => {
+  const handleCancel = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await api.delete(`/reservation/delete/${id}`, {
+      await api.put(`/api/reservations/${id}/cancel`, {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setReservations(
-        reservations.filter((reservation) => reservation.id !== id)
-      );
-    } catch (error) {
-      console.error("Error deleting reservation:", error);
-    }
-  };
-
-  const handleChangeStatus = async (id, newStatus) => {
-    try {
-      const token = localStorage.getItem("token");
-      await api.put(
-        `/api/reservations/${id}`,
-        { status: newStatus },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setReservations(
-        reservations.map((reservation) =>
-          reservation.id === id
-            ? { ...reservation, status: newStatus }
-            : reservation
+      
+      // Mise à jour de l'état local avec la nouvelle valeur du statut
+      setReservations((prevReservations) =>
+        prevReservations.map((reservation) =>
+          reservation.id === id ? { ...reservation, status: "CANCELLED" } : reservation
         )
       );
     } catch (error) {
-      console.error("Error updating status:", error);
+      console.error("Error canceling reservation:", error);
+    }
+  };
+
+  const handleConfirm = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      await api.put(`/api/reservations/${id}/confirm`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      // Mise à jour de l'état local avec la nouvelle valeur du statut
+      setReservations((prevReservations) =>
+        prevReservations.map((reservation) =>
+          reservation.id === id ? { ...reservation, status: "CONFIRMED" } : reservation
+        )
+      );
+    } catch (error) {
+      console.error("Error confirming reservation:", error);
     }
   };
 
   return (
-    <div className="max-w-7xl text-black my-20 mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <div className="flex flex-col w-full max-w-full text-black my-20 mx-auto bg-white p-6 rounded-lg shadow-lg">
       <h1 className="text-2xl font-bold mb-6 text-gray-700">
         Gestion des Réservations
       </h1>
@@ -101,8 +100,8 @@ const ReservationManagement = () => {
         <div className="overflow-x-auto">
           <ReservationTable
             reservations={filteredReservations}
-            onDelete={handleDelete}
-            onChangeStatus={handleChangeStatus}
+            onCancel={handleCancel}
+            onConfirm={handleConfirm}
           />
         </div>
       )}

@@ -1,3 +1,4 @@
-backend\.idea
-frontend\node_modules
+backend/.idea
+frontend/node_modules
 backend/ProjectJEE/src/main/resources/application.properties
+

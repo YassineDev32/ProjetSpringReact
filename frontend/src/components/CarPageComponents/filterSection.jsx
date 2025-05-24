@@ -108,7 +108,7 @@ const FilterSection = ({ setFilters }) => {
         <div className="flex flex-wrap gap-4">
           {carMarks.map((mark) => (
             <button
-              key={mark.value}
+              key={mark.name}
               onClick={() => handleMarkChange(mark.name)} // Call handleMarkChange when clicked
               className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition ${carMark === mark.name ? "bg-blue-500 text-white" : "bg-gray-100 hover:bg-gray-200"}`}
             >

@@ -72,6 +72,11 @@ public class PaymentService {
 
         return paymentRepository.save(existingPayment);
     }
+    public Payment getPaymentByReservationId(Long reservationId) {
+        return paymentRepository.findByReservationId(reservationId)
+                .orElseThrow(() -> new RuntimeException("Payment not found for reservation id " + reservationId));
+    }
+
 
     public void deletePayment(Long id) {
         paymentRepository.deleteById(id);
@@ -103,30 +108,7 @@ public class PaymentService {
 
         // Créer un contrat
         Contract contract = new Contract();
-        contract.setTerms("Obligations du Locataire\n" +
-                "\n" +
-                "Restituer le véhicule dans le même état qu'au moment de la prise en charge.\n" +
-                "Respecter les limitations de kilométrage établies (maximum de 200 km/jour).\n" +
-                "Informer immédiatement le propriétaire en cas d'accident, de dommage ou de panne mécanique.\n" +
-                "Utiliser le véhicule uniquement pour des activités légales et en conformité avec le Code de la route.\n" +
-                "Restrictions\n" +
-                "\n" +
-                "Fumer est strictement interdit dans le véhicule.\n" +
-                "Il est interdit de transporter des substances dangereuses ou illégales.\n" +
-                "Le véhicule ne peut être conduit que par les personnes désignées dans le contrat.\n" +
-                "Toute conduite sous l'influence de drogues ou d'alcool est strictement interdite.\n" +
-                "Assurance\n" +
-                "\n" +
-                "Le véhicule est couvert par une assurance tous risques.\n" +
-                "Une franchise de 500 € s'applique en cas de dommages ou de vol.\n" +
-                "L'assurance ne couvre pas les dommages causés par une utilisation négligente ou interdite du véhicule.\n" +
-                "Retard et Résiliation\n" +
-                "\n" +
-                "Tout retard dans la restitution du véhicule entraînera des frais de 50 € par jour de retard.\n" +
-                "En cas de non-respect des conditions, le contrat peut être résilié immédiatement sans remboursement.\n" +
-                "Loi Applicable\n" +
-                "\n" +
-                "Ce contrat est régi par les lois en vigueur dans la juridiction du lieu de location.");
+        contract.setTerms("Obligations du Locataire\n");
         contract.setCreationDate(LocalDate.now());
         contract.setInvoice(invoice);
         contractRepository.save(contract);

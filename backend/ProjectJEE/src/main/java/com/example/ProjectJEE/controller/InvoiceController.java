@@ -77,4 +77,15 @@ public class InvoiceController {
     public void deleteInvoice(@PathVariable Long id) {
         invoiceService.deleteInvoice(id);
     }
+    @GetMapping("/reservation/{reservationId}")
+    public ResponseEntity<Invoice> getInvoiceByReservationId(@PathVariable Long reservationId) {
+        Optional<Invoice> invoice = invoiceService.getInvoiceByReservationId(reservationId);
+
+        if (invoice.isPresent()) {
+            return ResponseEntity.ok(invoice.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
 }

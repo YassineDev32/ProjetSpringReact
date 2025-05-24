@@ -91,7 +91,7 @@ const UserManagement = () => {
   
 
   return (
-    <div className="max-w-7xl text-black my-20 mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <div className="flex flex-col w-full max-w-full text-black my-20 mx-auto bg-white p-6 rounded-lg shadow-lg">
       <h1 className="text-2xl font-bold mb-6 text-gray-700">User Management</h1>
       {loading ? (
         <div className="text-center text-gray-500">Loading users...</div>

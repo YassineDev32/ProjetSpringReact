@@ -20,16 +20,22 @@ const About = () => {
                 data-aos="fade-up"
                 className="text-3xl sm:text-4xl font-bold font-serif underline decoration-[#00df9a]"
               >
-                About us
+                À propos de nous
               </h1>
               <p data-aos="fade-up" className="leading-8 tracking-wide">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Aspernatur, magnam! Tenetur odio quo et maxime?
+              Qui sommes-nous ?
+              Nous sommes une entreprise dédiée à la location de voitures, 
+              offrant des véhicules modernes, fiables et adaptés à tous vos besoins. 
+              Que ce soit pour un déplacement professionnel, 
+              un voyage en famille ou une escapade de dernière minute, 
+              notre objectif est de vous fournir un service de qualité, 
+              des tarifs compétitifs et une expérience sans souci. 
+              nous sommes là pour rendre votre trajet confortable et agréable
               </p>
               <p data-aos="fade-up">
-                You can Book any car you want
+              Vous pouvez réserver la voiture de votre choix
                 <ReactTyped
-                  className="text-[1rem] font-bold md:pl-4 pl-2"
+                  className="text-[1rem] font-bold md:pl-1"
                   strings={["Dacia", "Clio", "Golf", "Polo", "Hyandai"]}
                   typeSpeed={120}
                   backSpeed={140}

@@ -107,6 +107,11 @@ public class ReservationController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/rented/count")
+    public ResponseEntity<Long> getRentedCarsThisMonth() {
+        Long rentedCars = reservationService.getRentedCarsThisMonth();
+        return ResponseEntity.ok(rentedCars);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteReservation(@PathVariable Long id) {

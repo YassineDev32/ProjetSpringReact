@@ -9,11 +9,11 @@ import {
 
 const FooterLinks = [
   {
-    title: "Home",
+    title: "Accueil",
     link: "/#",
   },
   {
-    title: "About",
+    title: "À propos",
     link: "/#about",
   },
   {
@@ -34,20 +34,21 @@ const Footer = () => {
           {/* Company Details */}
           <div className="py-8 px-4">
             <h1 className="sm:text-3xl text-xl font-bold sm:text-left text-justify mb-3 flex items-center gap-3 font-serif">
-              Car Rental
+              CaroteX
             </h1>
             <p className="text-sm">
-              Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Possimus, voluptate.
+              CaroteX est une entreprise spécialisée dans la location de voitures
+              au Maroc. Nous offrons des véhicules de qualité pour vos besoins
+              professionnels et personnels.
             </p>
             <br />
             <div className="flex items-center gap-3">
               <FaLocationArrow />
-              <p>Noida, Uttar Pradesh</p>
+              <p>Casablanca, Maroc</p>
             </div>
             <div className="flex items-center gap-3 mt-3">
               <FaMobileAlt />
-              <p>+91 123456789</p>
+              <p>+212 6 123 456 78</p>
             </div>
             {/* Social Handle */}
             <div className="flex items-center gap-3 mt-6">
@@ -68,7 +69,7 @@ const Footer = () => {
             {/* Important Links */}
             <div className="py-8 px-4">
               <h1 className="sm:text-xl text-xl font-bold sm:text-left text-justify mb-3">
-                Important Links
+                Liens Importants
               </h1>
               <ul className="flex flex-col gap-3">
                 {FooterLinks.map((link, index) => (
@@ -86,7 +87,7 @@ const Footer = () => {
             {/* Links */}
             <div className="py-8 px-4">
               <h1 className="sm:text-xl text-xl font-bold sm:text-left text-justify mb-3">
-                Links
+                Liens
               </h1>
               <ul className="flex flex-col gap-3">
                 {FooterLinks.map((link, index) => (
@@ -104,7 +105,7 @@ const Footer = () => {
             {/* Location */}
             <div className="py-8 px-4">
               <h1 className="sm:text-xl text-xl font-bold sm:text-left text-justify mb-3">
-                Location
+                Emplacement
               </h1>
               <ul className="flex flex-col gap-3">
                 {FooterLinks.map((link, index) => (

@@ -48,7 +48,7 @@ const RapportManagement = () => {
   };
 
   return (
-    <div className="max-w-7xl text-black my-20 mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <div className="flex flex-col w-full max-w-full text-black my-20 mx-auto bg-white p-6 rounded-lg shadow-lg">
       <h1 className="text-2xl font-bold mb-6 text-gray-700">Gestion des Rapports</h1>
       <div className="mb-6">
         <RapportFilter filters={filters} onFilterChange={handleFilterChange} />

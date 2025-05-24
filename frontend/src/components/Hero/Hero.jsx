@@ -89,8 +89,10 @@ const Hero = ({ theme }) => {
               />
             </h1>
             <p data-aos="fade-up" data-aos-delay="1000">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-              veritatis explicabo quibusdam quae reprehenderit ab{" "}
+              We offer a convenient and affordable car rental service for
+              individuals. Whether you're traveling for business or leisure, our
+              fleet is designed to meet your needs, ensuring a smooth and
+              hassle-free experience.
             </p>
             <button
               data-aos="fade-up"

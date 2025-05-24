@@ -3,11 +3,14 @@ import Sidebar from "../components/Dashboard/Sidebar";
 import TopNav from "../components/Dashboard/TopNav";
 import { Outlet } from "react-router-dom";
 
-const Dashboard = () => {
+const Dashboard = ({ setIsLoggedIn }) => {
   return (
     <div className="flex h-screen bg-gray-900 text-gray-100">
       {/* Sidebar */}
-      <Sidebar className="w-[260px] fixed top-0 left-0 h-full bg-gray-800 shadow-lg" />
+      <Sidebar
+        setIsLoggedIn={setIsLoggedIn}
+        className="w-[260px] fixed top-0 left-0 h-full bg-gray-800 shadow-lg"
+      />
 
       {/* Main Layout */}
       <div className="flex-1 ml-[260px] flex flex-col">

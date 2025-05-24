@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
 import api from "../api"; // Assurez-vous que votre instance Axios est correctement configurée.
+import DownloadContractButton from "../components/ContractPdf/DownloadContractButton";
 
 const MyBooking = () => {
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userData, setUserData] = useState(null);
+  const [selectedBooking, setSelectedBooking] = useState(null); // To manage selected booking for details modal
+  const [showModal, setShowModal] = useState(false); // To toggle modal visibility
+  const [invoice, setInvoice] = useState(null); // Store invoice data
+  const navigate = useNavigate(); // Initialize useNavigate
 
   // Fetch user data
   useEffect(() => {
@@ -27,7 +33,9 @@ const MyBooking = () => {
     if (userData) {
       const fetchBookings = async () => {
         try {
-          const response = await api.get(`/api/reservations/mesreservations/${userData.id}`);
+          const response = await api.get(
+            `/api/reservations/mesreservations/${userData.id}`
+          );
           setBookings(response.data);
         } catch (err) {
           console.error("Failed to fetch bookings", err);
@@ -41,14 +49,72 @@ const MyBooking = () => {
     }
   }, [userData]);
 
-  const handleDelete = (reservationId) => {
-    console.log(`Delete booking with reservation ID: ${reservationId}`);
-    // Add delete logic here.
+  // Fetch invoice when booking details are clicked
+  const fetchInvoice = async (reservationId) => {
+    try {
+      const response = await api.get(
+        `/api/invoices/reservation/${reservationId}`
+      );
+      setInvoice(response.data);
+    } catch (err) {
+      console.error("Failed to fetch invoice", err);
+      setError("Unable to fetch invoice.");
+    }
   };
 
-  const handleUpdate = (reservationId) => {
-    console.log(`Update booking with reservation ID: ${reservationId}`);
-    // Add update logic here.
+  const handleViewDetails = (booking) => {
+    setSelectedBooking(booking);
+    fetchInvoice(booking.id); // Fetch invoice for the selected booking
+    setShowModal(true);
+  };
+
+  const handleCancelBooking = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      // Send cancel request
+      await api.put(
+        `/api/reservations/cancel/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Update the state locally
+      setBookings((prevBookings) =>
+        prevBookings.map((booking) =>
+          booking.id === id ? { ...booking, status: "CANCELLED" } : booking
+        )
+      );
+
+      // Close the modal after cancellation
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error canceling reservation:", error);
+      setError("Failed to cancel the booking. Please try again.");
+    }
+  };
+
+  const handlePayBooking = (id) => {
+    navigate(`/checkout/${id}`); // Navigate to the checkout page with the booking ID as a URL parameter
+    setShowModal(false);
+  };
+
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case "COMPLETED":
+        return "bg-green-100 text-green-700 px-2 py-1 rounded-full text-sm";
+      case "PENDING":
+        return "bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-sm";
+      case "CANCELLED":
+        return "bg-red-100 text-red-700 px-2 py-1 rounded-full text-sm";
+      case "CONFIRMED":
+        return "bg-green-300 text-green-900 px-2 py-1 rounded-full text-sm";
+      default:
+        return "bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-sm";
+    }
   };
 
   if (isLoading) return <p>Loading...</p>;
@@ -56,7 +122,7 @@ const MyBooking = () => {
 
   return (
     <div className="min-h-screen dark:text-black bg-gray-100 p-4 sm:p-6">
-      <div className="max-w-6xl mx-auto bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+      <div className="w-auto mx-auto bg-white p-6 sm:p-8 rounded-lg shadow-lg">
         <h1 className="text-2xl sm:text-3xl font-semibold mb-4 sm:mb-6 text-center">
           My Booking
         </h1>
@@ -79,22 +145,27 @@ const MyBooking = () => {
                     <td className="py-2 px-4 border-b">{booking.id}</td>
                     <td className="py-2 px-4 border-b">{booking.startDate}</td>
                     <td className="py-2 px-4 border-b">{booking.endDate}</td>
-                    <td className="py-2 px-4 border-b">{booking.status}</td>
                     <td className="py-2 px-4 border-b">
-                      {booking.car.model.name + " " + booking.car.model.mark.name}
+                      <span className={getStatusStyle(booking.status)}>
+                        {booking.status}
+                      </span>
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      {booking.car.model.name +
+                        " " +
+                        booking.car.model.mark.name}
                     </td>
                     <td className="py-2 px-4 border-b">
                       <button
-                        onClick={() => handleDelete(booking.id)}
-                        className="bg-red-500 text-white px-3 py-1 rounded-lg mr-2 hover:bg-red-700"
+                        onClick={() => handleViewDetails(booking)}
+                        disabled={booking.status === "CANCELLED"}
+                        className={`${
+                          booking.status === "Cancelled"
+                            ? "bg-gray-400 cursor-not-allowed"
+                            : "bg-green-500 hover:bg-green-700"
+                        } text-white px-3 py-1 rounded-lg`}
                       >
-                        Delete
-                      </button>
-                      <button
-                        onClick={() => handleUpdate(booking.id)}
-                        className="bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-700"
-                      >
-                        Update
+                        Voir Details
                       </button>
                     </td>
                   </tr>
@@ -113,6 +184,74 @@ const MyBooking = () => {
           </table>
         </div>
       </div>
+
+      {/* Modal for Viewing Details */}
+      {showModal && selectedBooking && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-500 bg-opacity-75">
+          <div className="bg-white p-8 rounded-lg shadow-xl w-full sm:w-96 transition-all transform duration-300 ease-in-out">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+              Reservation Details
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <strong className="text-gray-700">Reservation Number : </strong>{" "}
+                {selectedBooking.id}
+              </div>
+              <div>
+                <strong className="text-gray-700">Start Date : </strong>{" "}
+                {selectedBooking.startDate}
+              </div>
+              <div>
+                <strong className="text-gray-700">End Date : </strong>{" "}
+                {selectedBooking.endDate}
+              </div>
+              <div>
+                <strong className="text-gray-700">Status : </strong>
+                <span className={getStatusStyle(selectedBooking.status)}>
+                  {selectedBooking.status}
+                </span>
+              </div>
+              <div>
+                <strong className="text-gray-700">Car : </strong>{" "}
+                {selectedBooking.car.model.name}{" "}
+                {selectedBooking.car.model.mark.name}
+              </div>
+              <div>
+                <strong className="text-gray-700">Facture : </strong>
+                {invoice ? invoice.totalAmount : "No invoice available."} MAD
+              </div>
+            </div>
+
+            <div className="mt-6 space-x-4 flex justify-end">
+              {selectedBooking.status !== "COMPLETED" ? (
+                <>
+                  <button
+                    onClick={() => handleCancelBooking(selectedBooking.id)}
+                    className="bg-red-600 text-white px-6 py-2 rounded-lg text-sm font-semibold hover:bg-red-700 transition duration-300 ease-in-out"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => handlePayBooking(selectedBooking.id)}
+                    className="bg-blue-600 text-white px-6 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition duration-300 ease-in-out"
+                  >
+                    Pay
+                  </button>
+                </>
+              ) : (
+                <DownloadContractButton reservationId={selectedBooking.id} user={userData} />
+              )}
+            </div>
+
+            <button
+              onClick={() => setShowModal(false)}
+              className="mt-4 w-full bg-gray-300 text-black py-2 rounded-lg hover:bg-gray-400 transition duration-300 ease-in-out"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -5,14 +5,54 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81fe661d-7f12-41d8-b53b-0d2f392fd1f9" name="Changes" comment="test">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/config/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/CarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/CarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/InvoiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/InvoiceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/PaymentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/ReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/ReservationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/repository/InvoiceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/repository/InvoiceRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/repository/PaymentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/repository/PaymentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/repository/ReservationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/repository/ReservationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/CarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/CarService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/EmailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/InvoiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/InvoiceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/PaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/ReservationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/java/com/example/ProjectJEE/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectJEE/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJEE/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/About/About.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/About/About.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/AppStoreBanner/AppStoreBanner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/AppStoreBanner/AppStoreBanner.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/CarList/CarList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/CarList/CarList.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/CarPageComponents/MainSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/CarPageComponents/MainSection.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/CarPageComponents/filterSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/CarPageComponents/filterSection.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Contact/Contact.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Contact/Contact.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Bookings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Bookings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Rapports/RapportManagement.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Rapports/RapportManagement.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Rapports/RapportTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Rapports/RapportTable.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Reservations/ReservationManagement.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Reservations/ReservationManagement.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Reservations/ReservationTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Reservations/ReservationTable.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Utilisateurs/UserManagement.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Utilisateurs/UserManagement.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Utilisateurs/UserTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Dashboard/pages/Utilisateurs/UserTable.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Footer/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Footer/Footer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Hero/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Hero/Hero.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Navbar/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Services/Services.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Services/Services.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Testimonial/Testimonial.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Testimonial/Testimonial.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/UI/BookingForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/UI/BookingForm.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/pages/CarDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/CarDetails.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/CarList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/CarList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/Dashboard.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/pages/MyBooking.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/MyBooking.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/UserProfile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/UserProfile.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +100,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yassine_Saiiiiid/OneDrive/Bureau/ProjectReactSpring/backend&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yassine_Saiiiiid/Downloads/ProjectAyoub/backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -180,7 +220,33 @@
       <workItem from="1735288526851" duration="738000" />
       <workItem from="1735408874362" duration="135000" />
       <workItem from="1735425874626" duration="4305000" />
-      <workItem from="1735469250112" duration="816000" />
+      <workItem from="1735469250112" duration="10841000" />
+      <workItem from="1735484561998" duration="9000" />
+      <workItem from="1735494753716" duration="8865000" />
+      <workItem from="1735604993464" duration="2531000" />
+      <workItem from="1735645970878" duration="3287000" />
+      <workItem from="1735675417418" duration="9000" />
+      <workItem from="1735676916208" duration="690000" />
+      <workItem from="1735765910251" duration="670000" />
+      <workItem from="1735808211457" duration="10000" />
+      <workItem from="1735837368873" duration="29000" />
+      <workItem from="1736351388533" duration="626000" />
+      <workItem from="1736533589304" duration="3236000" />
+      <workItem from="1736550501573" duration="4375000" />
+      <workItem from="1736598261747" duration="486000" />
+      <workItem from="1736602300103" duration="1439000" />
+      <workItem from="1736609184729" duration="5330000" />
+      <workItem from="1736627277152" duration="357000" />
+      <workItem from="1736636284449" duration="1147000" />
+      <workItem from="1736640126272" duration="1822000" />
+      <workItem from="1736775465780" duration="2144000" />
+      <workItem from="1736779804157" duration="3843000" />
+      <workItem from="1737573280026" duration="687000" />
+      <workItem from="1737912477899" duration="718000" />
+      <workItem from="1747327283205" duration="410000" />
+      <workItem from="1747328165883" duration="2529000" />
+      <workItem from="1747391002173" duration="102000" />
+      <workItem from="1748031004773" duration="1091000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <option name="closed" value="true" />

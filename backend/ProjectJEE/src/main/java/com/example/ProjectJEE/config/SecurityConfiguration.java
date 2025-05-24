@@ -36,7 +36,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/api/**").permitAll()
-                        .requestMatchers("/auth/logout").authenticated()// Public endpoints
+                        .requestMatchers("/auth/logout").authenticated()
+                        .requestMatchers("/api/payments/create").authenticated()// Public endpoints
                         .requestMatchers("/admin/**").hasRole("ADMIN")  // Only ADMIN
                         .requestMatchers("/user/me").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/user/update").hasAnyRole("USER", "ADMIN")

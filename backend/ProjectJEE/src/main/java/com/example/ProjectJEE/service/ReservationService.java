@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.xml.datatype.DatatypeConstants;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 
@@ -194,6 +195,14 @@ public class ReservationService {
         }
 
         return reservationRepository.save(existingReservation);
+    }
+    public Long getRentedCarsThisMonth() {
+        // Get the current month and year
+        LocalDate startOfMonth = YearMonth.now().atDay(1);
+        LocalDate endOfMonth = startOfMonth.withDayOfMonth(startOfMonth.lengthOfMonth());
+
+        // Query for reservations within the current month
+        return reservationRepository.countByStartDateBetweenOrEndDateBetween(startOfMonth, endOfMonth, startOfMonth, endOfMonth);
     }
 
     public void deleteReservation(Long id) {

@@ -13,7 +13,7 @@ const CarList = () => {
 
   return (
     <section className="dark:bg-gray-100 py-10">
-      <div className="container mx-auto px-4 md:px-8 lg:px-16">
+      <div className="container w-[3000px] mx-auto px-4 md:px-8 lg:px-16">
         <div className="flex flex-col lg:flex-row gap-10">
           {/* Pass setFilters to FilterSection */}
           <FilterSection setFilters={setFilters} />

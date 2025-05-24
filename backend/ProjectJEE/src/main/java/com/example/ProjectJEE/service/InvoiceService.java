@@ -68,4 +68,8 @@ public class InvoiceService {
     public void deleteInvoice(Long id) {
         invoiceRepository.deleteById(id);
     }
+    public Optional<Invoice> getInvoiceByReservationId(Long reservationId) {
+        return invoiceRepository.findByReservationId(reservationId); // Assuming the repository has a method like this
+    }
+
 }

@@ -30,11 +30,13 @@ import Dashboard from "./pages/Dashboard";
 import DDashboard from "./components/Dashboard/pages/Dashboard";
 import Bookings from "./components/Dashboard/pages/Bookings"; // Import the Bookings component
 import Settings from "./components/Dashboard/pages/Settings"; // Import the Settings component
-import UserManagement from "./components/Dashboard/pages/Utilisateurs/UserManagement"; 
-import DetailsCar from "./components/Dashboard/pages/DetailsCar"; 
+import UserManagement from "./components/Dashboard/pages/Utilisateurs/UserManagement";
+import DetailsCar from "./components/Dashboard/pages/DetailsCar";
 import ReservationManagement from "./components/Dashboard/pages/Reservations/ReservationManagement";
 import RapportManagement from "./components/Dashboard/pages/Rapports/RapportManagement";
 import MyBooking from "./pages/MyBooking";
+import Checkout from "./pages/Checkout";
+import SuccessPayment from "./components/PaymentForm/SuccessPayment";
 
 // Layout components
 const ClientLayout = ({
@@ -160,7 +162,7 @@ const App = () => {
                 isLoggedIn={isLoggedIn}
                 setIsLoggedIn={setIsLoggedIn}
               >
-                <CarDetails isLoggedIn={isLoggedIn}/>
+                <CarDetails isLoggedIn={isLoggedIn} />
               </ClientLayout>
             }
           />
@@ -222,15 +224,12 @@ const App = () => {
             element={
               <ProtectedRoute allowedRoles={["ROLE_ADMIN"]}>
                 {/* The Dashboard layout is now rendered for any path under /admin */}
-                <Dashboard />
+                <Dashboard setIsLoggedIn={setIsLoggedIn} />
               </ProtectedRoute>
             }
           >
             {/* Nested Routes inside the Dashboard layout */}
-            <Route
-              path="dashboard"
-              element={<DDashboard />}
-            />
+            <Route path="dashboard" element={<DDashboard />} />
             {/* Replace with actual content */}
             <Route path="vehicule" element={<Bookings />} />
             <Route path="utilisateurs" element={<UserManagement />} />
@@ -269,6 +268,36 @@ const App = () => {
                   setIsLoggedIn={setIsLoggedIn}
                 >
                   <MyBooking />
+                </ClientLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/checkout/:reservationId"
+            element={
+              <ProtectedRoute allowedRoles={["ROLE_USER", "ROLE_ADMIN"]}>
+                <ClientLayout
+                  theme={theme}
+                  setTheme={setTheme}
+                  isLoggedIn={isLoggedIn}
+                  setIsLoggedIn={setIsLoggedIn}
+                >
+                  <Checkout />
+                </ClientLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/success-payment"
+            element={
+              <ProtectedRoute allowedRoles={["ROLE_USER", "ROLE_ADMIN"]}>
+                <ClientLayout
+                  theme={theme}
+                  setTheme={setTheme}
+                  isLoggedIn={isLoggedIn}
+                  setIsLoggedIn={setIsLoggedIn}
+                >
+                  <SuccessPayment />
                 </ClientLayout>
               </ProtectedRoute>
             }

@@ -99,7 +99,11 @@ public class CarController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    @GetMapping("/count")
+    public ResponseEntity<Long> getTotalCarsCount() {
+        Long totalCars = carService.getTotalCarsCount();
+        return ResponseEntity.ok(totalCars);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteCar(@PathVariable Long id) {

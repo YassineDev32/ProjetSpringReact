@@ -21,6 +21,7 @@ const Navbar = ({ theme, setTheme, isLoggedIn, setIsLoggedIn }) => {
       });
       localStorage.removeItem("token");
       setIsLoggedIn(false);
+      setShowUserMenu(false);
       navigate("/login");
     } catch (err) {
       console.error("Erreur lors de la déconnexion:", err);
