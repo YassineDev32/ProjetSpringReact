@@ -21,6 +21,7 @@
     "@tsparticles/slim": "^3.6.0",
     "aos": "^2.3.4",
     "axios": "^1.7.9",
+    "jspdf": "^2.5.1",
     "jwt-decode": "^4.0.0",
     "landingpage": "file:",
     "lucide-react": "^0.471.0",

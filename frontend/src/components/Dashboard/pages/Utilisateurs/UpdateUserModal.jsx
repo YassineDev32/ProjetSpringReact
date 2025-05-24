@@ -111,6 +111,7 @@ const UpdateUserModal = ({ user, isOpen, onClose, onSave }) => {
               </option>
               <option value="ADMIN">ADMIN</option>
               <option value="USER">USER</option>
+              <option value="TECH">TECHNICIEN</option>
             </select>
 
             {/* CIN */}

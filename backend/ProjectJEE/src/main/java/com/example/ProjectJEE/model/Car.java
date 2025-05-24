@@ -19,6 +19,7 @@ public class Car {
     private int price;
     @Enumerated(EnumType.STRING)
     private EnumStatus status;
+    private String carState;
     private int seats;
     private boolean manual;
     private boolean airConditioning;

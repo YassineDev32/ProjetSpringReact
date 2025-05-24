@@ -42,6 +42,7 @@ public class AuthenticationService {
     }
 
     public User signup(RegisterUserDto input) {
+        System.out.println(input);
         Role role = input.getRole() != null ? input.getRole() : Role.USER;
         User user = new User(input.getUsername(), input.getEmail(), passwordEncoder.encode(input.getPassword()),role);
         user.setVerificationCode(generateVerificationCode());

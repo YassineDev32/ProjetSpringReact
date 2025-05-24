@@ -125,4 +125,20 @@ public class UserController {
                     .body(Map.of("error", "An error occurred while deleting the user"));
         }
     }
+
+    @GetMapping("/gettech")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<User>> getTechList(){
+        try {
+            return ResponseEntity.ok(userService.findTech(Role.TECH));
+        }catch (Exception e) {
+            throw new RuntimeException("Error while retrieving tech list");
+        }
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
+        System.out.println("username passed : " + username) ;
+        return ResponseEntity.ok(userService.findByUsername(username));
+    }
 }
