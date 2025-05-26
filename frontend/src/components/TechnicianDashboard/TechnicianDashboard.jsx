@@ -193,7 +193,7 @@ const TechnicianDashboard = () => {
                   src="/anas.jpg"
                   alt="Avatar"
                 />
-                <span className="ml-2 font-medium text-white">Thomas Dupont</span>
+                <span className="ml-2 font-medium text-white">Anas</span>
               </div>
             </div>
           </div>

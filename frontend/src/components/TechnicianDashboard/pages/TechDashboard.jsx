@@ -265,7 +265,7 @@ const TechDashboard = () => {
           <div className="bg-gray-900 rounded-lg shadow-md p-6 border border-gray-800">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg font-semibold text-white">Tâches à venir</h2>
-              <button className="text-green-400 hover:text-green-300 text-sm font-medium">Voir toutes</button>
+              
             </div>
             <div className="space-y-4">
               {tasks.map((task, index) => (
@@ -280,7 +280,7 @@ const TechDashboard = () => {
           <div className="bg-gray-900 rounded-lg shadow-md p-6 border border-gray-800">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg font-semibold text-white">État des véhicules</h2>
-              <button className="text-green-400 hover:text-green-300 text-sm font-medium">Voir tous</button>
+              
             </div>
             <div>
               {vehicles.map((vehicle, index) => (
