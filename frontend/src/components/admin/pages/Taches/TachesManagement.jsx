@@ -220,7 +220,7 @@ const TachesManagement = () => {
         date: formData.date,
         time: formData.time,
         car: { id: carId },
-        technician: { id: technicianId },
+        technician: { id: technicianId , role : "TECH"},
       }
 
       if (selectedTask) {

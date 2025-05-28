@@ -1,4 +1,4 @@
 backend/.idea
 frontend/node_modules
 backend/ProjectJEE/src/main/resources/application.properties
-
+mobile-app/node_modules

@@ -35,6 +35,7 @@ const CarItem = (props) => {
         <img
           src={`data:image/png;base64,${image}`}
           className="w-[100%] object-cover rounded-[5px]"
+          alt="image"
         />
       </div>
 
