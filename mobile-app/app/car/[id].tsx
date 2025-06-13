@@ -15,8 +15,9 @@ import axios from 'axios';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import { getToken, clearAuth } from '../../utils/auth';
+import { getApiUrl } from '../../config/api';
 
-const API_URL = 'http://172.20.10.4:8080';
+const API_URL = getApiUrl();
 const { width } = Dimensions.get('window');
 
 type Car = {

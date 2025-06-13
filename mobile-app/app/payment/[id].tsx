@@ -19,8 +19,9 @@ import { getToken } from '../../utils/auth';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { CardField, useStripe, useConfirmPayment } from '@stripe/stripe-react-native';
 import { STRIPE_CONFIG, initializeStripe } from '../../config/stripe';
+import { getApiUrl } from '../../config/api';
 
-const API_URL = 'http://172.20.10.4:8080';
+const API_URL = getApiUrl();
 
 type Reservation = {
   id: number;

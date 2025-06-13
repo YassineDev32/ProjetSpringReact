@@ -12,8 +12,9 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import axios from 'axios';
 import { getToken } from '../utils/auth';
+import { getApiUrl } from '../config/api';
 
-const API_URL = 'http://172.20.10.4:8080';
+const API_URL = getApiUrl();
 
 type Booking = {
   id: number;

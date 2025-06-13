@@ -14,8 +14,9 @@ import { useRouter } from 'expo-router';
 import axios from 'axios';
 import { getToken } from '../../utils/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getApiUrl } from '../../config/api';
 
-const API_URL = 'http://172.20.10.4:8080';
+const API_URL = getApiUrl();
 
 type User = {
   id: number;

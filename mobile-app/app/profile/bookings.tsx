@@ -16,8 +16,9 @@ import axios from 'axios';
 import { getToken } from '../../utils/auth';
 import * as FileSystem from 'expo-file-system';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getApiUrl } from '../../config/api';
 
-const API_URL = 'http://172.20.10.4:8080';
+const API_URL = getApiUrl();
 
 type Booking = {
   id: number;

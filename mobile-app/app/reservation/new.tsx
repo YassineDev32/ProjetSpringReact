@@ -16,8 +16,9 @@ import { FontAwesome } from '@expo/vector-icons';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import { getToken, clearAuth } from '../../utils/auth';
+import { getApiUrl } from '../../config/api';
 
-const API_URL = 'http://172.20.10.4:8080';
+const API_URL = getApiUrl();
 
 type Car = {
   id: number;

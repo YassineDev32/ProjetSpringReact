@@ -15,8 +15,9 @@ import {
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import axios from 'axios';
 import { FontAwesome } from '@expo/vector-icons';
+import { getApiUrl } from '../config/api';
 
-const API_URL = 'http://172.20.10.4:8080';
+const API_URL = getApiUrl();
 
 export default function VerifyScreen() {
   const [code, setCode] = useState('');

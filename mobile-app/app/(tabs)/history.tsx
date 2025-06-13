@@ -13,8 +13,9 @@ import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
 import { getToken } from '../../utils/auth';
 import { useRouter } from 'expo-router';
+import { getApiUrl } from '../../config/api';
 
-const API_URL = 'http://172.20.10.4:8080';
+const API_URL = getApiUrl();
 
 type Booking = {
   id: number;

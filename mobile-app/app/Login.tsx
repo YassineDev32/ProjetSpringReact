@@ -18,9 +18,10 @@ import axios from 'axios';
 import { useRouter } from 'expo-router';
 import { setToken, storeUserData } from '../utils/auth';
 import { FontAwesome } from '@expo/vector-icons';
+import { getApiUrl } from '../config/api';
 
 // Update this with your actual backend server IP address
-const API_URL = 'http://172.20.10.4:8080'; // Replace with your actual IP address
+const API_URL = getApiUrl();
 
 const Login = () => {
   const [email, setEmail] = useState('');
