@@ -4,50 +4,50 @@ Dans le cadre de notre projet de location de voitures utilisant Spring Boot, lâ€
 
 # Diagrammes UML
 
-![image.png](image.png)
+![image.png](images/image.png)
 
-![image.png](image%201.png)
+![image.png](images/image%201.png)
 
-![image.png](image%202.png)
+![image.png](images/image%202.png)
 
-![image.png](image%203.png)
+![image.png](images/image%203.png)
 
-![image.png](image%204.png)
+![image.png](images/image%204.png)
 
-![image.png](image%205.png)
+![image.png](images/image%205.png)
 
 ## Diagrammes de communication:
 
-![image.png](image%206.png)
+![image.png](images/image%206.png)
 
 # MANUEL Dâ€™UTILISATION (UI)
 
-![image.png](image%207.png)
+![image.png](images/image%207.png)
 
-![image.png](image%208.png)
+![image.png](images/image%208.png)
 
-![image.png](image%209.png)
+![image.png](images/image%209.png)
 
-![image.png](image%2010.png)
+![image.png](images/image%2010.png)
 
-![image.png](image%2011.png)
+![image.png](images/image%2011.png)
 
-![image.png](image%2012.png)
+![image.png](images/image%2012.png)
 
-![image.png](image%2013.png)
+![image.png](images/image%2013.png)
 
-![image.png](image%2014.png)
+![image.png](images/image%2014.png)
 
-![image.png](image%2015.png)
+![image.png](images/image%2015.png)
 
-![image.png](image%2016.png)
+![image.png](images/image%2016.png)
 
-![image.png](image%2017.png)
+![image.png](images/image%2017.png)
 
-![image.png](image%2018.png)
+![image.png](images/image%2018.png)
 
-![image.png](image%2019.png)
+![image.png](images/image%2019.png)
 
-![image.png](image%2020.png)
+![image.png](images/image%2020.png)
 
-![image.png](image%2021.png)
+![image.png](images/image%2021.png)
